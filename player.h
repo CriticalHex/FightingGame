@@ -3,6 +3,7 @@
 class Player
 {
 public:
+	
 	Player(int x, int y, bool face);
 	~Player();
 	void collide(int floorLevel);

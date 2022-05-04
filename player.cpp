@@ -1,4 +1,6 @@
+
 #include"player.h"
+
 
 
 Player::Player(int x, int y, bool face)
@@ -7,6 +9,8 @@ Player::Player(int x, int y, bool face)
 	ypos = y;
 	facing = face;
 }
+
+
 
 Player::~Player()
 {
