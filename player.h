@@ -17,8 +17,8 @@ private:
 	sf::Vector2f position;
 	sf::Texture texture;
 	sf::Sprite sprite;
-	
 	bool facing;
+	int ticker = 0;
 	int vx = 0;
 	int vy = 1;
 	int width = 173;

@@ -7,9 +7,9 @@ Player::Player(sf::Vector2f pos, bool face)
 	position = pos;
 	facing = face;
 	texture.loadFromFile("Assests/frog.png");
-	rect.setPosition(position);
-	rect.setFillColor(sf::Color::Red);
-	rect.setSize(sf::Vector2f(width, height));
+	sprite.setTexture(texture);
+	sprite.setTextureRect(sf::IntRect(0, 0, width, height));
+	sprite.setPosition(position);
 }
 
 Player::~Player()
@@ -30,7 +30,7 @@ void Player::collide(int floorLevel, sf::Vector2u windowSize) {
 }
 
 void Player::draw(sf::RenderWindow& window) {
-	window.draw(rect);
+	window.draw(sprite);
 }
 
 
