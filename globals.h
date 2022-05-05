@@ -1,0 +1,2 @@
+#pragma once
+enum { UP, DOWN, LEFT, RIGHT, ULEFT, URIGHT, DLEFT, DRIGHT, NONE };
