@@ -10,7 +10,9 @@ public:
 	~Player();
 	void collide(int floorLevel, sf::Vector2u windowSize);
 	void draw(sf::RenderWindow& window);
+	void look(int otherXPos);
 	void move();
+	sf::Vector2f getPos();
 	bool keys[8] = { false, false, false, false, false, false, false, false };
 
 private:

@@ -42,7 +42,6 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 				players[0]->keys[LEFT] = true;
-				std::cout << "LEFT" << std::endl;
             }
             else players[0]->keys[LEFT] = false;
 
@@ -61,15 +60,35 @@ int main()
             }
             else players[0]->keys[DOWN] = false;
 
-			for (auto& it : players) {
-				it->move();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+				players[1]->keys[LEFT] = true;
 			}
+			else players[1]->keys[LEFT] = false;
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+				players[1]->keys[RIGHT] = true;
+			}
+			else players[1]->keys[RIGHT] = false;
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				players[1]->keys[UP] = true;
+			}
+			else players[1]->keys[UP] = false;
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				players[1]->keys[DOWN] = true;
+			}
+			else players[1]->keys[DOWN] = false;
 			
 		}
 
 		for (auto& it : players) {
+			it->move();
 			it->collide(floorY, window.getSize());
 		}
+
+		players[0]->look(players[1]->getPos().x);
+		players[1]->look(players[0]->getPos().x);
 
         //render
         window.clear();

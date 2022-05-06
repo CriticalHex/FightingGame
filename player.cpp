@@ -34,6 +34,9 @@ void Player::draw(sf::RenderWindow& window) {
 	window.draw(sprite);
 }
 
+void look(){
+
+}
 
 void Player::move() {
 	if (keys[LEFT] == true){
@@ -58,7 +61,9 @@ void Player::move() {
 	position.x += vx;
 	position.y += vy;
 
-	
-
 	sprite.setPosition(position);
+}
+
+sf::Vector2f Player::getPos() {
+	return position;
 }
