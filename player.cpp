@@ -32,6 +32,12 @@ void Player::collide(int floorLevel, sf::Vector2u windowSize) {
 }
 
 void Player::draw(sf::RenderWindow& window) {
+	if (facing) {
+		sprite.setTextureRect(sf::IntRect(0, 0, width, height));
+	}
+	if (!facing) {
+		sprite.setTextureRect(sf::IntRect(width, 0, -width, height));
+	}
 	window.draw(sprite);
 }
 

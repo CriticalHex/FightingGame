@@ -19,6 +19,11 @@ int main()
 	int winY = window.getSize().y;
 	sf::Event event;
 
+	//bg
+	sf::Texture bg0Tex;
+	bg0Tex.loadFromFile("Assests/Background/bg0.png");
+	sf::Sprite bg0(bg0Tex);
+
 	//player initialization
 	vector<Player*> players;
 	players.push_back(new Player(sf::Vector2f(150, 600), true));
@@ -92,6 +97,7 @@ int main()
 
         //render
         window.clear();
+		window.draw(bg0);
 		window.draw(floor, 2, sf::Lines);
 		for (auto& it : players) {
 			it->draw(ref(window));
