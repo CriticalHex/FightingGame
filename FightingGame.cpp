@@ -59,36 +59,16 @@ int main()
                 players[0]->keys[DOWN] = true;
             }
             else players[0]->keys[DOWN] = false;
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				players[1]->keys[LEFT] = true;
-			}
-			else players[1]->keys[LEFT] = false;
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				players[1]->keys[RIGHT] = true;
-			}
-			else players[1]->keys[RIGHT] = false;
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				players[1]->keys[UP] = true;
-			}
-			else players[1]->keys[UP] = false;
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				players[1]->keys[DOWN] = true;
-			}
-			else players[1]->keys[DOWN] = false;
 			
 		}
 
 		for (auto& it : players) {
 			it->move();
-		}
-
-		for (auto& it : players) {
 			it->collide(floorY, window.getSize());
 		}
+
+		players[0]->look(players[1]->getPos().x);
+		players[1]->look(players[0]->getPos().x);
 
         //render
         window.clear();
