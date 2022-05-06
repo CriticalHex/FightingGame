@@ -1,6 +1,7 @@
 #include<SFML\Graphics.hpp>
 #include "player.h"
 #include"globals.h"
+#include<iostream>
 
 Player::Player(sf::Vector2f pos, bool face)
 {
@@ -34,19 +35,30 @@ void Player::draw(sf::RenderWindow& window) {
 }
 
 
-void Player::move(){
-	if (keys[LEFT] == true)
-        vx = -3;
-
-    if (keys[RIGHT] == true)
-        vx = 3;
-
-    if (keys[UP] == true)
-        vy = -3;
-
-    if (keys[DOWN] == true)
-        vy = 3;
-
+void Player::move() {
+	if (keys[LEFT] == true){
+		vx = -6;
+		//std::cout << "left" << std::endl;
+	}
+	else if (keys[RIGHT] == true){
+		vx = 6;
+		//std::cout << "right" << std::endl;
+	}
+	else vx = 0;
+	if (keys[UP] == true){
+		vy = -6;
+		//std::cout << "up" << std::endl;
+	}
+	else if (keys[DOWN] == true) {
+		vy = 6;
+		//std::cout << "down" << std::endl;
+	}
+	else vy = 0;
+		
 	position.x += vx;
 	position.y += vy;
+
+	
+
+	sprite.setPosition(position);
 }

@@ -42,6 +42,7 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 				players[0]->keys[LEFT] = true;
+				std::cout << "LEFT" << std::endl;
             }
             else players[0]->keys[LEFT] = false;
 
