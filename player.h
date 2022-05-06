@@ -18,6 +18,7 @@ private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	bool facing;
+	float gravity = 1;
 	int ticker = 0;
 	int vx = 0;
 	int vy = 1;

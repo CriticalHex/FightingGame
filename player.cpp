@@ -18,9 +18,10 @@ Player::~Player()
 }
 
 void Player::collide(int floorLevel, sf::Vector2u windowSize) {
-	if (position.y + height >= floorLevel) {
+	if (position.y + height >= floorLevel) { //floor collide
 		vy = 0;
 		position.y = floorLevel - height;
+		onGround = true;
 	}
 	if (position.x + width >= windowSize.x) {
 		position.x = windowSize.x - width;
@@ -37,28 +38,28 @@ void Player::draw(sf::RenderWindow& window) {
 
 void Player::move() {
 	if (keys[LEFT] == true){
-		vx = -6;
+		vx = -10;
 		//std::cout << "left" << std::endl;
 	}
 	else if (keys[RIGHT] == true){
-		vx = 6;
+		vx = 10;
 		//std::cout << "right" << std::endl;
 	}
 	else vx = 0;
-	if (keys[UP] == true){
-		vy = -6;
+	if (keys[UP] == true and onGround == true){
+		vy = -20;
+		onGround = false;
 		//std::cout << "up" << std::endl;
 	}
-	else if (keys[DOWN] == true) {
-		vy = 6;
+	else if (keys[DOWN] == true and onGround == false) {
+		vy = 10;
 		//std::cout << "down" << std::endl;
 	}
-	else vy = 0;
+
+	vy += gravity;
 		
 	position.x += vx;
 	position.y += vy;
-
-	
 
 	sprite.setPosition(position);
 }
