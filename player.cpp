@@ -35,8 +35,13 @@ void Player::draw(sf::RenderWindow& window) {
 	window.draw(sprite);
 }
 
-void look(){
-
+void Player::look(float otherX){
+	if (otherX > position.x) {
+		facing = true;
+	}
+	else if (otherX < position.x) {
+		facing = false;
+	}
 }
 
 void Player::move() {

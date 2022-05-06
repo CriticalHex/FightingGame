@@ -21,8 +21,8 @@ int main()
 
 	//player initialization
 	vector<Player*> players;
-	players.push_back(new Player(sf::Vector2f(150, 600), 1));
-	players.push_back(new Player(sf::Vector2f(winX - 300, 600), 0));
+	players.push_back(new Player(sf::Vector2f(150, 600), true));
+	players.push_back(new Player(sf::Vector2f(winX - 300, 600), false));
 
 	//floor variables
 	int floorY = 900;
@@ -60,6 +60,26 @@ int main()
             }
             else players[0]->keys[DOWN] = false;
 			
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+				players[1]->keys[LEFT] = true;
+			}
+			else players[1]->keys[LEFT] = false;
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+				players[1]->keys[RIGHT] = true;
+			}
+			else players[1]->keys[RIGHT] = false;
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				players[1]->keys[UP] = true;
+			}
+			else players[1]->keys[UP] = false;
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				players[1]->keys[DOWN] = true;
+			}
+			else players[1]->keys[DOWN] = false;
+
 		}
 
 		for (auto& it : players) {
