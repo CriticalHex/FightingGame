@@ -2,8 +2,10 @@
 #include<SFML\Graphics.hpp>
 //#include<SFML\Network.hpp>
 #include<vector>
+#include<ctime>
 #include"player.h"
 #include"globals.h"
+#include"timer.h"
 
 using namespace std;
 
@@ -18,6 +20,19 @@ int main()
 	int winX = window.getSize().x;
 	int winY = window.getSize().y;
 	sf::Event event;
+
+	//timer
+	Timer timer(winX);
+
+	//text setup
+	string elapsed_time = "00:00";
+	sf::Font font;
+	font.loadFromFile("Assests/Font/arial.ttf");
+	sf::Text text(elapsed_time, font);
+	text.setCharacterSize(60);
+	text.setOrigin(text.getCharacterSize(), 0);
+	text.setPosition(winX / 2, 0);
+	text.setFillColor(sf::Color::Blue);
 
 	//bg
 	sf::Texture bg0Tex;
@@ -99,6 +114,7 @@ int main()
         //render
         window.clear();
 		window.draw(bg0);
+		timer.count(ref(window));
 		window.draw(floor, 2, sf::Lines);
 		for (auto& it : players) {
 			it->draw(ref(window));

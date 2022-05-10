@@ -16,6 +16,7 @@ public:
 	void special();
 	void quick();
 	void heavy();
+	void healthBar(float x);
 	sf::Vector2f getPos();
 	bool keys[8] = { false, false, false, false, false, false, false, false };
 

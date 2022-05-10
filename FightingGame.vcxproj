@@ -141,10 +141,12 @@
   <ItemGroup>
     <ClCompile Include="FightingGame.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globals.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assests\Background\bg0.png" />
