@@ -9,7 +9,7 @@ Player::Player(sf::Vector2f pos, bool face)
 {
 	position = pos;
 	facing = face;
-	texture.loadFromFile("Assests/frog.png");
+	texture.loadFromFile("Assests/Characters/frog.png");
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, width, height));
 	sprite.setPosition(position);
@@ -114,6 +114,10 @@ void Player::determine_direction() {
 	else {
 		direction = NONE;
 	}
+}
+
+void healthBar(float x) {
+
 }
 
 void Player::specialAttack() {

@@ -30,8 +30,8 @@ private:
 	int ticker = 0;
 	int vx = 0;
 	int vy = 1;
-	int width = 173;
-	int height = 300;
+	int width = 162;
+	int height = 280;
 	bool onGround = true;
 	int canAttack = 0;
 	int health = 200;
