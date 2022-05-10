@@ -100,6 +100,40 @@ int main()
 			}
 			else players[1]->keys[DOWN] = false;
 
+
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
+				players[0]->quickAttack();
+			}
+
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
+				players[0]->heavyAttack();
+			}
+
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
+				players[0]->block();
+			}
+
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
+				players[0]->specialAttack();
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)) {
+				players[1]->quickAttack();
+			}
+
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)) {
+				players[1]->specialAttack();
+			}
+
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)) {
+				players[1]->heavyAttack();
+			}
+
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)) {
+				players[1]->block();
+			}
+
 		}
 
 		for (auto& it : players) {

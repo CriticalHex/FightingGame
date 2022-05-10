@@ -115,3 +115,19 @@ void Player::determine_direction() {
 		direction = NONE;
 	}
 }
+
+void Player::specialAttack() {
+	std::cout << "special" << std::endl;
+}
+
+void Player::quickAttack() {
+	std::cout << "quick" << std::endl;
+}
+
+void Player::heavyAttack() {
+	std::cout << "heavy" << std::endl;
+}
+
+void Player::block() {
+	std::cout << "block" << std::endl;
+}
