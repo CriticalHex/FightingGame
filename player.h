@@ -12,6 +12,10 @@ public:
 	void draw(sf::RenderWindow& window);
 	void look(float otherX);
 	void move();
+	void determine_direction();
+	void special();
+	void quick();
+	void heavy();
 	sf::Vector2f getPos();
 	bool keys[8] = { false, false, false, false, false, false, false, false };
 

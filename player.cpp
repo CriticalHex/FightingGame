@@ -3,6 +3,8 @@
 #include"globals.h"
 #include<iostream>
 
+using namespace std;
+
 Player::Player(sf::Vector2f pos, bool face)
 {
 	position = pos;
@@ -78,6 +80,38 @@ void Player::move() {
 	sprite.setPosition(position);
 }
 
-sf::Vector2f Player::getPos() {
-	return position;
+sf::Vector2f Player::getPos() { return position; }
+
+void Player::determine_direction() {
+	if (keys[LEFT]) {
+		if (keys[UP]) {
+			direction = ULEFT;
+		}
+		else if (keys[DOWN]) {
+			direction = DLEFT;
+		}
+		else {
+			direction = LEFT;
+		}
+	}
+	else if (keys[RIGHT]) {
+		if (keys[UP]) {
+			direction = URIGHT;
+		}
+		else if (keys[DOWN]) {
+			direction = DRIGHT;
+		}
+		else {
+			direction = RIGHT;
+		}
+	}
+	else if (keys[DOWN]) {
+		direction = DOWN;
+	}
+	else if (keys[UP]) {
+		direction = UP;
+	}
+	else {
+		direction = NONE;
+	}
 }
