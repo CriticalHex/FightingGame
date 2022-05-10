@@ -17,7 +17,7 @@ public:
 	void quickAttack();
 	void heavyAttack();
 	void block();
-	void healthBar(float x);
+	void healthBar(sf::RenderWindow& window, float x);
 	sf::Vector2f getPos();
 	bool keys[4] = { false, false, false, false };
 
@@ -34,8 +34,9 @@ private:
 	int height = 280;
 	bool onGround = true;
 	int canAttack = 0;
+	int maxHealth = 200;
 	int health = 200;
 	int specialCharge = 0;
 	int direction = NONE;
-	sf::RectangleShape rect;//temp
+	sf::VertexArray hBar;
 };

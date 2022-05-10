@@ -116,8 +116,16 @@ void Player::determine_direction() {
 	}
 }
 
-void healthBar(float x) {
-
+void Player::healthBar(sf::RenderWindow& window, float x) {
+	sf::Vertex pixel(sf::Vector2f(0, 0), sf::Color::Red);
+	for (int i = 0; i < health * 4; i++) {
+		pixel.color = sf::Color(i / 4,50,200);
+		for (int j = 0; j < 50; j++) {
+			pixel.position = sf::Vector2f(x + i, 15 + j);
+			hBar.append(pixel);
+		}
+	}
+	window.draw(hBar);
 }
 
 void Player::specialAttack() {

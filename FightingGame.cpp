@@ -148,6 +148,8 @@ int main()
         //render
         window.clear();
 		window.draw(bg0);
+		players[0]->healthBar(ref(window), 0);
+		players[1]->healthBar(ref(window), winX);
 		timer.count(ref(window));
 		window.draw(floor, 2, sf::Lines);
 		for (auto& it : players) {
