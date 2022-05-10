@@ -13,11 +13,12 @@ public:
 	void look(float otherX);
 	void move();
 	void determine_direction();
-	void special();
-	void quick();
-	void heavy();
+	void specialAttack();
+	void quickAttack();
+	void heavyAttack();
+	void block();
 	sf::Vector2f getPos();
-	bool keys[8] = { false, false, false, false, false, false, false, false };
+	bool keys[4] = { false, false, false, false };
 
 private:
 	sf::Vector2f position;
