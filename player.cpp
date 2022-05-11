@@ -43,7 +43,7 @@ void Player::draw(sf::RenderWindow& window) {
 	window.draw(sprite);
 }
 
-void Player::look(float otherX){
+void Player::look(float otherX) {
 	if (otherX > position.x) {
 		facing = true;
 	}
@@ -53,27 +53,23 @@ void Player::look(float otherX){
 }
 
 void Player::move() {
-	if (keys[LEFT] == true){
+	if (keys[LEFT] == true) {
 		vx = -10;
-		//std::cout << "left" << std::endl;
 	}
-	else if (keys[RIGHT] == true){
+	else if (keys[RIGHT] == true) {
 		vx = 10;
-		//std::cout << "right" << std::endl;
 	}
 	else vx = 0;
-	if (keys[UP] == true and onGround == true){
+	if (keys[UP] == true and onGround == true) {
 		vy = -20;
 		onGround = false;
-		//std::cout << "up" << std::endl;
 	}
 	else if (keys[DOWN] == true and onGround == false) {
 		vy = 10;
-		//std::cout << "down" << std::endl;
 	}
 
 	vy += gravity;
-		
+
 	position.x += vx;
 	position.y += vy;
 
@@ -120,7 +116,7 @@ void Player::specialAttack() {
 	std::cout << "special" << std::endl;
 }
 
-void Player::quickAttack() {
+void Player::quickAttack(int otherXPos, int otherYPos, int otherHealth) {
 	std::cout << "quick" << std::endl;
 }
 
