@@ -41,7 +41,6 @@ void Player::draw(sf::RenderWindow& window) {
 		sprite.setTextureRect(sf::IntRect(width, 0, -width, height));
 	}
 	window.draw(sprite);
-	window.draw(AttackRect);
 }
 
 void Player::look(float otherX){
@@ -83,10 +82,6 @@ void Player::move() {
 
 sf::Vector2f Player::getPos() { return position; }
 
-int Player::getWidth() { return width; }
-
-int Player::getHeight() { return height; }
-
 void Player::determine_direction() {
 	if (keys[LEFT]) {
 		if (keys[UP]) {
@@ -125,16 +120,8 @@ void Player::specialAttack() {
 	std::cout << "special" << std::endl;
 }
 
-void Player::quickAttack(sf::RenderWindow& window, sf::Vector2f otherPosTopLeft, sf::Vector2f otherPosBottemRight) {
-	//std::cout << "quick" << std::endl;
-	sf::Vector2f shoulder((position.x + width), (position.y + 50));
-	sf::Vector2f fist((position.x + width + reach), (position.y + 50 + 25));
-	collision(shoulder, fist, otherPosTopLeft, otherPosBottemRight);
-	cout << "HAPPENING\n";
-	AttackRect.setSize(sf::Vector2f(reach, 25));
-	AttackRect.setPosition(shoulder);
-	//rect.setOutlineColor(sf::Color::Red);
-	AttackRect.setFillColor(sf::Color::Red);
+void Player::quickAttack() {
+	std::cout << "quick" << std::endl;
 }
 
 void Player::heavyAttack() {
@@ -143,13 +130,4 @@ void Player::heavyAttack() {
 
 void Player::block() {
 	std::cout << "block" << std::endl;
-}
-
-void Player::collision(sf::Vector2f shoulder, sf::Vector2f fist, sf::Vector2f otherPosTopLeft, sf::Vector2f otherPosBottemRight) {
-	if ((((shoulder.x >= otherPosTopLeft.x) and (shoulder.x <= otherPosBottemRight.x)) and 
-		 ((shoulder.y >= otherPosTopLeft.y) and (shoulder.y <= otherPosBottemRight.y))) or
-		(((fist.x >= otherPosTopLeft.x) and (fist.x <= otherPosBottemRight.x)) and
-		 ((fist.y >= otherPosTopLeft.y) and (fist.y <= otherPosBottemRight.y)))) {
-		cout << "collide" << endl;
-	}
 }

@@ -103,7 +103,7 @@ int main()
 
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
-				players[0]->quickAttack(ref(window), sf::Vector2f(players[1]->getPos().x, players[1]->getPos().y), sf::Vector2f((players[1]->getPos().x + players[1]->getWidth()), players[1]->getPos().y + players[1]->getHeight()));
+				players[0]->quickAttack();
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
@@ -119,7 +119,7 @@ int main()
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)) {
-				players[1]->quickAttack(ref(window), sf::Vector2f(players[0]->getPos().x, players[0]->getPos().y), sf::Vector2f((players[0]->getPos().x + players[0]->getWidth()), players[0]->getPos().y + players[0]->getHeight()));
+				players[1]->quickAttack();
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)) {
@@ -140,13 +140,10 @@ int main()
 			it->determine_direction();
 			it->move();
 			it->collide(floorY, window.getSize());
-			
 		}
 
 		players[0]->look(players[1]->getPos().x);
 		players[1]->look(players[0]->getPos().x);
-		//players[0]->collision(players[0]->getPos().x, players[0]->getPos().y, 173, 300, players[1]->getPos().x, players[1]->getPos().y, 173, 300);
-		//players[1]->collision(players[1]->getPos().x, players[1]->getPos().y, 173, 300, players[0]->getPos().x, players[0]->getPos().y, 173, 300);
 
         //render
         window.clear();
