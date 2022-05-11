@@ -2,22 +2,37 @@
 #include<SFML\Graphics.hpp>
 //#include<SFML\Network.hpp>
 #include<vector>
+#include<ctime>
 #include"player.h"
 #include"globals.h"
+#include"timer.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "we ball.\n";
+	cout << "we ball.\n";
 
 	//variables
 	//window variables
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "FIGHT!", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "FIGHT!", sf::Style::Fullscreen);
 	window.setFramerateLimit(60);
 	int winX = window.getSize().x;
 	int winY = window.getSize().y;
 	sf::Event event;
+
+	//timer
+	Timer timer(winX);
+
+	//text setup
+	string elapsed_time = "00:00";
+	sf::Font font;
+	font.loadFromFile("Assests/Font/arial.ttf");
+	sf::Text text(elapsed_time, font);
+	text.setCharacterSize(60);
+	text.setOrigin(text.getCharacterSize(), 0);
+	text.setPosition(winX / 2, 0);
+	text.setFillColor(sf::Color::Blue);
 
 	//bg
 	sf::Texture bg0Tex;
@@ -32,9 +47,9 @@ int main()
 	//floor variables
 	int floorY = 900;
 	sf::Vertex floor[] = { sf::Vertex(sf::Vector2f(0, floorY), sf::Color::Red), sf::Vertex(sf::Vector2f(winX, floorY), sf::Color::Red) };
-	
 
-    while (window.isOpen()) {
+
+	while (window.isOpen()) {
 		while (window.pollEvent(event))
 		{
 			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
@@ -62,9 +77,9 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 				players[0]->keys[DOWN] = true;
-            }
-            else players[0]->keys[DOWN] = false;
-			
+			}
+			else players[0]->keys[DOWN] = false;
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				players[1]->keys[LEFT] = true;
 			}
@@ -88,7 +103,7 @@ int main()
 
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
-				players[0]->quickAttack();
+				players[0]->quickAttack(players[1]->getPos().x, players[1]->getPos().y, players[1]->health);
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
@@ -104,7 +119,7 @@ int main()
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)) {
-				players[1]->quickAttack();
+				players[1]->quickAttack(players[0]->getPos().x, players[0]->getPos().y, players[0]->health);
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)) {
@@ -130,13 +145,14 @@ int main()
 		players[0]->look(players[1]->getPos().x);
 		players[1]->look(players[0]->getPos().x);
 
-        //render
-        window.clear();
+		//render
+		window.clear();
 		window.draw(bg0);
+		timer.count(ref(window));
 		window.draw(floor, 2, sf::Lines);
 		for (auto& it : players) {
 			it->draw(ref(window));
 		}
-        window.display();
-    };
+		window.display();
+	};
 }
