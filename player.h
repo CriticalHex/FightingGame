@@ -5,7 +5,7 @@
 class Player
 {
 public:
-	
+
 	Player(sf::Vector2f pos, bool face);
 	~Player();
 	void collide(int floorLevel, sf::Vector2u windowSize);
@@ -14,11 +14,13 @@ public:
 	void move();
 	void determine_direction();
 	void specialAttack();
-	void quickAttack();
+	void quickAttack(int otherXPos, int otherYPos, int otherHealth);
 	void heavyAttack();
 	void block();
+	void healthBar(float x);
 	sf::Vector2f getPos();
 	bool keys[4] = { false, false, false, false };
+	int health = 200;
 
 private:
 	sf::Vector2f position;
@@ -33,8 +35,8 @@ private:
 	int height = 300;
 	bool onGround = true;
 	int canAttack = 0;
-	int health = 200;
 	int specialCharge = 0;
 	int direction = NONE;
+	int reach = 120;
 	sf::RectangleShape rect;//temp
 };
