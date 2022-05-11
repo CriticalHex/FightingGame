@@ -17,14 +17,17 @@ public:
 	void quickAttack();
 	void heavyAttack();
 	void block();
-	void healthBar(sf::RenderWindow& window, float x);
+	void damage(int damage);
+	int getHealth();
 	sf::Vector2f getPos();
 	bool keys[4] = { false, false, false, false };
 
 private:
 	sf::Vector2f position;
-	sf::Texture texture;
-	sf::Sprite sprite;
+	sf::Texture PlayerTexture;
+	sf::Sprite PlayerSprite;
+	sf::Texture HealthBarTexture;
+	sf::Sprite HealthBarSprite;
 	bool facing;
 	float gravity = 1;
 	int ticker = 0;

@@ -72,6 +72,7 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 				players[0]->keys[UP] = true;
+				players[0]->damage(5);
 			}
 			else players[0]->keys[UP] = false;
 
@@ -148,8 +149,6 @@ int main()
         //render
         window.clear();
 		window.draw(bg0);
-		players[0]->healthBar(ref(window), 0);
-		players[1]->healthBar(ref(window), winX);
 		timer.count(ref(window));
 		window.draw(floor, 2, sf::Lines);
 		for (auto& it : players) {

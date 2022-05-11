@@ -9,10 +9,14 @@ Player::Player(sf::Vector2f pos, bool face)
 {
 	position = pos;
 	facing = face;
-	texture.loadFromFile("Assests/Characters/frog.png");
-	sprite.setTexture(texture);
-	sprite.setTextureRect(sf::IntRect(0, 0, width, height));
-	sprite.setPosition(position);
+	PlayerTexture.loadFromFile("Assests/Player/Characters/frog.png");
+	PlayerSprite.setTexture(PlayerTexture);
+	PlayerSprite.setTextureRect(sf::IntRect(0, 0, width, height));
+	PlayerSprite.setPosition(position);
+
+	HealthBarTexture.loadFromFile("Assests/Player/healthbar.png");
+	HealthBarSprite.setTexture(HealthBarTexture);
+	HealthBarSprite.setPosition(0, 0);
 }
 
 Player::~Player()
@@ -31,16 +35,19 @@ void Player::collide(int floorLevel, sf::Vector2u windowSize) {
 	else if (position.x <= 0) {
 		position.x = 0;
 	}
+
+	PlayerSprite.setPosition(position);
 }
 
 void Player::draw(sf::RenderWindow& window) {
 	if (facing) {
-		sprite.setTextureRect(sf::IntRect(0, 0, width, height));
+		PlayerSprite.setTextureRect(sf::IntRect(0, 0, width, height));
 	}
 	if (!facing) {
-		sprite.setTextureRect(sf::IntRect(width, 0, -width, height));
+		PlayerSprite.setTextureRect(sf::IntRect(width, 0, -width, height));
 	}
-	window.draw(sprite);
+	window.draw(HealthBarSprite);
+	window.draw(PlayerSprite);
 }
 
 void Player::look(float otherX){
@@ -77,7 +84,7 @@ void Player::move() {
 	position.x += vx;
 	position.y += vy;
 
-	sprite.setPosition(position);
+	
 }
 
 sf::Vector2f Player::getPos() { return position; }
@@ -116,16 +123,12 @@ void Player::determine_direction() {
 	}
 }
 
-void Player::healthBar(sf::RenderWindow& window, float x) {
-	sf::Vertex pixel(sf::Vector2f(0, 0), sf::Color::Red);
-	for (int i = 0; i < health * 4; i++) {
-		pixel.color = sf::Color(i / 4,50,200);
-		for (int j = 0; j < 50; j++) {
-			pixel.position = sf::Vector2f(x + i, 15 + j);
-			hBar.append(pixel);
-		}
-	}
-	window.draw(hBar);
+void Player::damage(int damage) {
+	health -= damage;
+}
+
+int Player::getHealth() {
+	return health;
 }
 
 void Player::specialAttack() {
