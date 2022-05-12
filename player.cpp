@@ -64,6 +64,8 @@ void Player::draw(sf::RenderWindow& window) {
 	window.draw(HealthBarSprite);
 	window.draw(HealthBarEmptySprite);
 	window.draw(PlayerSprite);
+	window.draw(AttackRect);
+	AttackRect.setOutlineColor(sf::Color::Transparent);
 }
 
 void Player::look(float otherX) {
@@ -100,6 +102,10 @@ void Player::move() {
 }
 
 sf::Vector2f Player::getPos() { return position; }
+
+int Player::getWidth() { return width; }
+
+int Player::getHeight() { return height; }
 
 void Player::determine_direction() {
 	if (keys[LEFT]) {
@@ -157,8 +163,37 @@ void Player::specialAttack() {
 	std::cout << "special" << std::endl;
 }
 
-void Player::quickAttack(int otherXPos, int otherYPos, int otherHealth) {
-	std::cout << "quick" << std::endl;
+void Player::quickAttack(sf::RenderWindow& window, Player player) {
+	sf::Vector2f shoulder;
+	sf::Vector2f fist;
+	if (facing == true) {
+		shoulder.x = (position.x + width);
+		shoulder.y = (position.y + 50);
+		fist.x = (position.x + width + reach);
+		fist.y = (position.y + 50 + 25);
+
+		AttackRect.setSize(sf::Vector2f(reach, 25));
+		AttackRect.setPosition(shoulder);
+		AttackRect.setOutlineColor(sf::Color::Red);
+		AttackRect.setOutlineThickness(5);
+		AttackRect.setFillColor(sf::Color::Transparent);
+	}
+	if (facing == false) {
+		shoulder.x = (position.x);
+		shoulder.y = (position.y + 50);
+		fist.x = (position.x - reach);
+		fist.y = (position.y + 50 + 25);
+
+		AttackRect.setSize(sf::Vector2f(reach, -25));
+		AttackRect.setPosition(fist);
+		AttackRect.setOutlineColor(sf::Color::Red);
+		AttackRect.setOutlineThickness(5);
+		AttackRect.setFillColor(sf::Color::Transparent);
+	}
+	
+	if (collision(shoulder, fist, player.getPos(), sf::Vector2f((player.getPos().x + player.getWidth()), player.getPos().y + player.getHeight()))) {
+		player.damage(5);
+	}
 }
 
 void Player::heavyAttack() {
@@ -167,4 +202,15 @@ void Player::heavyAttack() {
 
 void Player::block() {
 	std::cout << "block" << std::endl;
+}
+
+bool Player::collision(sf::Vector2f shoulder, sf::Vector2f fist, sf::Vector2f otherPosTopLeft, sf::Vector2f otherPosBottemRight) {
+	if ((((shoulder.x >= otherPosTopLeft.x) and (shoulder.x <= otherPosBottemRight.x)) and
+	((shoulder.y >= otherPosTopLeft.y) and (shoulder.y <= otherPosBottemRight.y))) or
+	(((fist.x >= otherPosTopLeft.x) and (fist.x <= otherPosBottemRight.x)) and
+	((fist.y >= otherPosTopLeft.y) and (fist.y <= otherPosBottemRight.y)))) {
+		std::cout << "collide" << endl;
+		return true;
+	}
+	return false;
 }

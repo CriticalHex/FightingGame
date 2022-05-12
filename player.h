@@ -14,14 +14,17 @@ public:
 	void move();
 	void determine_direction();
 	void specialAttack();
-	void quickAttack();
+	void quickAttack(sf::RenderWindow& window, Player player);
 	void heavyAttack();
 	void block();
 	void damage(int damage);
-	int getHealth();
 	void healthBar();
-	sf::Vector2f getPos();
+	bool collision(sf::Vector2f shoulder, sf::Vector2f fist, sf::Vector2f otherPosTopLeft, sf::Vector2f otherPosBottemRight);
 	bool keys[4] = { false, false, false, false };
+	int getHealth();
+	int getWidth();
+	int getHeight();
+	sf::Vector2f getPos();
 
 private:
 	sf::Vector2f position;
@@ -48,5 +51,7 @@ private:
 	int specialCharge = 0;
 	int direction = NONE;
 	int reach = 120;
+	bool attacking = false;
+	sf::RectangleShape AttackRect;
 	sf::RectangleShape rect;//temp
 };

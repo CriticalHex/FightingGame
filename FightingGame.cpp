@@ -105,7 +105,7 @@ int main()
 
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
-				players[0]->quickAttack(players[1]->getPos().x, players[1]->getPos().y, players[1]->health);
+				players[0]->quickAttack(ref(window), (*players[1]));
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
@@ -121,7 +121,7 @@ int main()
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)) {
-				players[1]->quickAttack(players[0]->getPos().x, players[0]->getPos().y, players[0]->health);
+				players[1]->quickAttack(ref(window), (*players[0]));
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)) {
