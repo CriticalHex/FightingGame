@@ -5,10 +5,10 @@
 
 using namespace std;
 
-Player::Player(sf::Vector2f pos, bool face)
+Player::Player(sf::Vector2f pos, bool player)
 {
 	position = pos;
-	facing = face;
+	playerOne = player;
 	PlayerTexture.loadFromFile("Assests/Player/Characters/frog.png");
 	PlayerSprite.setTexture(PlayerTexture);
 	PlayerSprite.setTextureRect(sf::IntRect(0, 0, width, height));
@@ -16,7 +16,22 @@ Player::Player(sf::Vector2f pos, bool face)
 
 	HealthBarTexture.loadFromFile("Assests/Player/healthbar.png");
 	HealthBarSprite.setTexture(HealthBarTexture);
-	HealthBarSprite.setPosition(0, 0);
+
+	HealthBarEmptyTexture.loadFromFile("Assests/Player/healthbarempty.png");
+	HealthBarEmptySprite.setTexture(HealthBarEmptyTexture);
+
+	if (!playerOne) {
+		HealthBarSprite.setOrigin(hbWidth, 0);
+		HealthBarSprite.setTextureRect(sf::IntRect(hbWidth, 0, -hbWidth, hbHeight));
+		HealthBarSprite.setPosition(1920, 0);
+
+		HealthBarEmptySprite.setOrigin(hbWidth, 0);
+		HealthBarEmptySprite.setTextureRect(sf::IntRect(hbWidth, 0, 0, hbHeight));
+		HealthBarEmptySprite.setPosition(1920, 0);
+	}
+	else {
+		HealthBarEmptySprite.setTextureRect(sf::IntRect(0, 0, 0, hbHeight));
+	}
 }
 
 Player::~Player()
@@ -47,6 +62,7 @@ void Player::draw(sf::RenderWindow& window) {
 		PlayerSprite.setTextureRect(sf::IntRect(width, 0, -width, height));
 	}
 	window.draw(HealthBarSprite);
+	window.draw(HealthBarEmptySprite);
 	window.draw(PlayerSprite);
 }
 
@@ -125,6 +141,16 @@ void Player::determine_direction() {
 
 void Player::damage(int damage) {
 	health -= damage;
+	healthBar();
+}
+
+void Player::healthBar() {
+	if (playerOne) {
+		HealthBarEmptySprite.setTextureRect(sf::IntRect(0, 0, maxHealth - health, hbHeight));
+	}
+	else {
+		HealthBarEmptySprite.setTextureRect(sf::IntRect(maxHealth - health, 0, -hbWidth, hbHeight));
+	}
 }
 
 int Player::getHealth() {

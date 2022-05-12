@@ -13,7 +13,7 @@ Timer::Timer(int winX)
 	text.setString(elapsed_time);
 	text.setFont(font);
 	text.setCharacterSize(60);
-	text.setOrigin(text.getCharacterSize(), 0);
+	text.setOrigin(75, 0);
 	text.setPosition(winX / 2, 0);
 	text.setFillColor(sf::Color::Blue);
 }

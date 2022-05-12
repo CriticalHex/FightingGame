@@ -6,7 +6,7 @@ class Player
 {
 public:
 	
-	Player(sf::Vector2f pos, bool face);
+	Player(sf::Vector2f pos, bool player);
 	~Player();
 	void collide(int floorLevel, sf::Vector2u windowSize);
 	void draw(sf::RenderWindow& window);
@@ -19,6 +19,7 @@ public:
 	void block();
 	void damage(int damage);
 	int getHealth();
+	void healthBar();
 	sf::Vector2f getPos();
 	bool keys[4] = { false, false, false, false };
 
@@ -28,6 +29,9 @@ private:
 	sf::Sprite PlayerSprite;
 	sf::Texture HealthBarTexture;
 	sf::Sprite HealthBarSprite;
+	sf::Texture HealthBarEmptyTexture;
+	sf::Sprite HealthBarEmptySprite;
+	bool playerOne;
 	bool facing;
 	float gravity = 1;
 	int ticker = 0;
@@ -35,6 +39,8 @@ private:
 	int vy = 1;
 	int width = 162;
 	int height = 280;
+	int hbWidth = 800;
+	int hbHeight = 62;
 	bool onGround = true;
 	int canAttack = 0;
 	int maxHealth = 200;

@@ -15,8 +15,8 @@ private:
 	time_t start;
 	string minStr = "00";
 	string secStr = "00";
-	int seconds;
-	int minutes;
+	int seconds = 0;
+	int minutes = 0;
 	string elapsed_time = "00:00";
 	sf::Font font;
 	sf::Text text;
