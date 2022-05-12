@@ -141,14 +141,12 @@
   <ItemGroup>
     <ClCompile Include="FightingGame.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globals.h" />
     <ClInclude Include="player.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assests\Background\bg0.png" />
-    <Image Include="Assests\frog.png" />
+    <ClInclude Include="timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

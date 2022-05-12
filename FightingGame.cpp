@@ -72,6 +72,7 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 				players[0]->keys[UP] = true;
+				players[0]->damage(5);
 			}
 			else players[0]->keys[UP] = false;
 
@@ -92,6 +93,7 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 				players[1]->keys[UP] = true;
+				players[1]->damage(5);
 			}
 			else players[1]->keys[UP] = false;
 
