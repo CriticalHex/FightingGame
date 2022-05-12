@@ -2,6 +2,7 @@
 #include "player.h"
 #include"globals.h"
 #include<iostream>
+#include<Windows.h>
 
 using namespace std;
 
@@ -22,12 +23,14 @@ Player::Player(sf::Vector2f pos, bool player)
 
 	if (!playerOne) {
 		HealthBarSprite.setOrigin(hbWidth, 0);
-		HealthBarSprite.setTextureRect(sf::IntRect(hbWidth, 0, -hbWidth, hbHeight));
-		HealthBarSprite.setPosition(1920, 0);
+		HealthBarSprite.setTextureRect(sf::IntRect(0, hbHeight, hbWidth, -hbHeight));
+		HealthBarSprite.setPosition(1920 - hbWidth, hbHeight);
+		HealthBarSprite.setRotation(180);
 
 		HealthBarEmptySprite.setOrigin(hbWidth, 0);
-		HealthBarEmptySprite.setTextureRect(sf::IntRect(hbWidth, 0, 0, hbHeight));
-		HealthBarEmptySprite.setPosition(1920, 0);
+		HealthBarEmptySprite.setTextureRect(sf::IntRect(0, 0, 0, hbHeight));
+		HealthBarEmptySprite.setPosition(1920 - hbWidth, hbHeight);
+		HealthBarEmptySprite.setRotation(180);
 	}
 	else {
 		HealthBarEmptySprite.setTextureRect(sf::IntRect(0, 0, 0, hbHeight));
@@ -149,8 +152,9 @@ void Player::healthBar() {
 		HealthBarEmptySprite.setTextureRect(sf::IntRect(0, 0, maxHealth - health, hbHeight));
 	}
 	else {
-		HealthBarEmptySprite.setTextureRect(sf::IntRect(maxHealth - health, 0, -hbWidth, hbHeight));
+		HealthBarEmptySprite.setTextureRect(sf::IntRect(0, hbHeight, maxHealth - health, -hbHeight));
 	}
+	//HealthBarEmptySprite.setTextureRect(sf::IntRect(0, 0, maxHealth - health, hbHeight));
 }
 
 int Player::getHealth() {
