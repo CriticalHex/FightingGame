@@ -35,7 +35,7 @@ private:
 	sf::Texture HealthBarEmptyTexture;
 	sf::Sprite HealthBarEmptySprite;
 	bool playerOne;
-	bool facing;
+	bool facing = true;
 	float gravity = 1;
 	int ticker = 0;
 	int vx = 0;
@@ -46,8 +46,8 @@ private:
 	int hbHeight = 62;
 	bool onGround = true;
 	int canAttack = 0;
-	int maxHealth = 200;
-	int health = 200;
+	int maxHealth = 800;
+	int health = 800;
 	int specialCharge = 0;
 	int direction = NONE;
 	int reach = 120;

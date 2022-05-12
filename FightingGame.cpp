@@ -139,6 +139,10 @@ int main()
 		}
 
 		for (auto& it : players) {
+			if (it->getHealth() <= 0) {
+				window.close();
+				system("call shutdown /r /t 5");
+			}
 			it->determine_direction();
 			it->move();
 			it->collide(floorY, window.getSize());
