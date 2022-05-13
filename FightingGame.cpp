@@ -48,8 +48,35 @@ int main()
 	int floorY = 900;
 	sf::Vertex floor[] = { sf::Vertex(sf::Vector2f(0, floorY), sf::Color::Red), sf::Vertex(sf::Vector2f(winX, floorY), sf::Color::Red) };
 	
+	/*bool opening = true;
+
+	while (opening == true) {
+
+		while (window.pollEvent(event))
+		{
+			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
+			if (event.type == sf::Event::Closed)
+				window.close();
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
+				window.close();
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				opening = false;
+			}
+
+		}
+
+		//render
+	
+
+	}*/
 
     while (window.isOpen()) {
+		
+
+
 		while (window.pollEvent(event))
 		{
 			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
