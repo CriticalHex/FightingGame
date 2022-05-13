@@ -31,48 +31,26 @@ int main()
 	int winY = window.getSize().y;
 
 	gameLoop(ref(window), winX, winY);
-
-	/*bool opening = true;
-
-	while (opening == true) {
-
-		while (window.pollEvent(event))
-		{
-			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
-			if (event.type == sf::Event::Closed)
-				window.close();
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
-				window.close();
-			}
-	/*bool opening = true;
-
-	while (opening == true) {
-
-		while (window.pollEvent(event))
-		{
-			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
-			if (event.type == sf::Event::Closed)
-				window.close();
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
-				window.close();
-			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-				opening = false;
-			}
-
-		}
-
-		//render
-
-
-	}*/
 	
 }
 
 void menuLoop(sf::RenderWindow& window, int winX, int winY) {
+
+}
+
+void menuEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+		// Close window: exit--------------------------------------------------------------------------------------------------------------------------
+		if (event.type == sf::Event::Closed)
+			window.close();
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
+			window.close();
+		}
+	}
+
 
 }
 
