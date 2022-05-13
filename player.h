@@ -14,7 +14,7 @@ public:
 	void move();
 	void determine_direction();
 	void specialAttack();
-	void quickAttack(sf::RenderWindow& window, Player player);
+	void quickAttack(sf::RenderWindow& window, Player* player);
 	void heavyAttack();
 	void block();
 	void damage(int damage);

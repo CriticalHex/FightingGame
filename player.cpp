@@ -167,36 +167,89 @@ void Player::specialAttack() {
 	std::cout << "special" << std::endl;
 }
 
-void Player::quickAttack(sf::RenderWindow& window, Player player) {
+void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 	sf::Vector2f shoulder;
 	sf::Vector2f fist;
-	if (facing == true) {
-		shoulder.x = (position.x + width);
-		shoulder.y = (position.y + 50);
-		fist.x = (position.x + width + reach);
-		fist.y = (position.y + 50 + 25);
+	if (facing) {
+		if (facing == true and direction == UP) {
+			shoulder.x = (position.x + width);
+			shoulder.y = (position.y + 50);
+			fist.x = (position.x + width + 25);
+			fist.y = (position.y + 50 - reach);
 
-		AttackRect.setSize(sf::Vector2f(reach, 25));
-		AttackRect.setPosition(shoulder);
-		AttackRect.setOutlineColor(sf::Color::Red);
-		AttackRect.setOutlineThickness(5);
-		AttackRect.setFillColor(sf::Color::Transparent);
+			AttackRect.setSize(sf::Vector2f(25, -reach));
+			AttackRect.setPosition(shoulder);
+			AttackRect.setOutlineColor(sf::Color::Red);
+			AttackRect.setOutlineThickness(5);
+			AttackRect.setFillColor(sf::Color::Transparent);
+		}
+		else if (facing == true and direction == DOWN) {
+			shoulder.x = (position.x + width);
+			shoulder.y = (position.y + height - 25);
+			fist.x = (position.x + width + reach);
+			fist.y = (position.y + height - 25);
+
+			AttackRect.setSize(sf::Vector2f(reach, -25));
+			AttackRect.setPosition(shoulder);
+			AttackRect.setOutlineColor(sf::Color::Red);
+			AttackRect.setOutlineThickness(5);
+			AttackRect.setFillColor(sf::Color::Transparent);
+		}
+		else {
+			shoulder.x = (position.x + width);
+			shoulder.y = (position.y + 50);
+			fist.x = (position.x + width + reach);
+			fist.y = (position.y + 50 + 25);
+
+			AttackRect.setSize(sf::Vector2f(reach, 25));
+			AttackRect.setPosition(shoulder);
+			AttackRect.setOutlineColor(sf::Color::Red);
+			AttackRect.setOutlineThickness(5);
+			AttackRect.setFillColor(sf::Color::Transparent);
+		}
 	}
-	if (facing == false) {
-		shoulder.x = (position.x);
-		shoulder.y = (position.y + 50);
-		fist.x = (position.x - reach);
-		fist.y = (position.y + 50 + 25);
 
-		AttackRect.setSize(sf::Vector2f(reach, -25));
-		AttackRect.setPosition(fist);
-		AttackRect.setOutlineColor(sf::Color::Red);
-		AttackRect.setOutlineThickness(5);
-		AttackRect.setFillColor(sf::Color::Transparent);
+	if (!facing) {
+		if (facing == false and direction == UP) {
+			shoulder.x = (position.x);
+			shoulder.y = (position.y + 50);
+			fist.x = (position.x - 25);
+			fist.y = (position.y + 50 - reach);
+
+			AttackRect.setSize(sf::Vector2f(-25, -reach));
+			AttackRect.setPosition(shoulder);
+			AttackRect.setOutlineColor(sf::Color::Red);
+			AttackRect.setOutlineThickness(5);
+			AttackRect.setFillColor(sf::Color::Transparent);
+		}
+		else if (facing == false and direction == DOWN) {
+			shoulder.x = (position.x);
+			shoulder.y = (position.y + height - 25);
+			fist.x = (position.x - reach);
+			fist.y = (position.y + height - 25);
+
+			AttackRect.setSize(sf::Vector2f(-reach, -25));
+			AttackRect.setPosition(shoulder);
+			AttackRect.setOutlineColor(sf::Color::Red);
+			AttackRect.setOutlineThickness(5);
+			AttackRect.setFillColor(sf::Color::Transparent);
+		}
+		else {
+			shoulder.x = (position.x);
+			shoulder.y = (position.y + 50);
+			fist.x = (position.x - reach);
+			fist.y = (position.y + 50 + 25);
+
+			AttackRect.setSize(sf::Vector2f(reach, -25));
+			AttackRect.setPosition(fist);
+			AttackRect.setOutlineColor(sf::Color::Red);
+			AttackRect.setOutlineThickness(5);
+			AttackRect.setFillColor(sf::Color::Transparent);
+		}
 	}
 	
-	if (collision(shoulder, fist, player.getPos(), sf::Vector2f((player.getPos().x + player.getWidth()), player.getPos().y + player.getHeight()))) {
-		player.damage(5);
+	if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+		player->damage(5);
 	}
 }
 
@@ -213,7 +266,6 @@ bool Player::collision(sf::Vector2f shoulder, sf::Vector2f fist, sf::Vector2f ot
 	((shoulder.y >= otherPosTopLeft.y) and (shoulder.y <= otherPosBottemRight.y))) or
 	(((fist.x >= otherPosTopLeft.x) and (fist.x <= otherPosBottemRight.x)) and
 	((fist.y >= otherPosTopLeft.y) and (fist.y <= otherPosBottemRight.y)))) {
-		std::cout << "collide" << endl;
 		return true;
 	}
 	return false;

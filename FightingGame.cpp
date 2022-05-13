@@ -72,7 +72,6 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 				players[0]->keys[UP] = true;
-				players[0]->damage(5);
 			}
 			else players[0]->keys[UP] = false;
 
@@ -93,7 +92,6 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 				players[1]->keys[UP] = true;
-				players[1]->damage(5);
 			}
 			else players[1]->keys[UP] = false;
 
@@ -105,7 +103,7 @@ int main()
 
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
-				players[0]->quickAttack(ref(window), (*players[1]));
+				players[0]->quickAttack(ref(window), players[1]);
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
@@ -121,7 +119,7 @@ int main()
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)) {
-				players[1]->quickAttack(ref(window), (*players[0]));
+				players[1]->quickAttack(ref(window), players[0]);
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)) {
@@ -141,7 +139,6 @@ int main()
 		for (auto& it : players) {
 			if (it->getHealth() <= 0) {
 				window.close();
-				system("call shutdown /r /t 5");
 			}
 			it->determine_direction();
 			it->move();
