@@ -11,11 +11,11 @@ using namespace std;
 
 int main()
 {
-    cout << "we ball.\n";
+	cout << "we ball.\n";
 
 	//variables
 	//window variables
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "FIGHT!", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "FIGHT!", sf::Style::Fullscreen);
 	window.setFramerateLimit(60);
 	int winX = window.getSize().x;
 	int winY = window.getSize().y;
@@ -61,6 +61,19 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
 				window.close();
 			}
+	/*bool opening = true;
+
+	while (opening == true) {
+
+		while (window.pollEvent(event))
+		{
+			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
+			if (event.type == sf::Event::Closed)
+				window.close();
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
+				window.close();
+			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 				opening = false;
@@ -69,11 +82,10 @@ int main()
 		}
 
 		//render
-	
+
 
 	}*/
-
-    while (window.isOpen()) {
+	while (window.isOpen()) {
 		while (window.pollEvent(event))
 		{
 			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
@@ -96,15 +108,14 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 				players[0]->keys[UP] = true;
-				players[0]->damage(5);
 			}
 			else players[0]->keys[UP] = false;
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 				players[0]->keys[DOWN] = true;
-            }
-            else players[0]->keys[DOWN] = false;
-			
+			}
+			else players[0]->keys[DOWN] = false;
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				players[1]->keys[LEFT] = true;
 			}
@@ -117,7 +128,6 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 				players[1]->keys[UP] = true;
-				players[1]->damage(5);
 			}
 			else players[1]->keys[UP] = false;
 
@@ -129,7 +139,7 @@ int main()
 
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
-				players[0]->quickAttack();
+				players[0]->quickAttack(ref(window), players[1]);
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
@@ -145,7 +155,7 @@ int main()
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)) {
-				players[1]->quickAttack();
+				players[1]->quickAttack(ref(window), players[0]);
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)) {
@@ -174,14 +184,14 @@ int main()
 		players[0]->look(players[1]->getPos().x);
 		players[1]->look(players[0]->getPos().x);
 
-        //render
-        window.clear();
+		//render
+		window.clear();
 		window.draw(bg0);
 		timer.count(ref(window));
 		window.draw(floor, 2, sf::Lines);
 		for (auto& it : players) {
 			it->draw(ref(window));
 		}
-        window.display();
-    };
+		window.display();
+	};
 }
