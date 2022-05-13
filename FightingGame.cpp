@@ -11,11 +11,15 @@ using namespace std;
 
 void menuLoop(sf::RenderWindow& window, int winX, int winY);
 
+void menuEventLoop(sf::RenderWindow& window, vector<Player*>& players);
+
 void gameLoop(sf::RenderWindow& window, int winX, int winY);
+
+void gameEventLoop(sf::RenderWindow& window, vector<Player*>& players);
 
 void gameOverLoop(sf::RenderWindow& window, int winX, int winY);
 
-void eventLoop(sf::RenderWindow& window, vector<Player*>& players);
+void gameOverEventLoop(sf::RenderWindow& window, vector<Player*>& players);
 
 int main()
 {
@@ -96,7 +100,7 @@ void gameLoop(sf::RenderWindow& window, int winX, int winY) {
 
 	while (window.isOpen()) {
 
-		eventLoop(ref(window), ref(players));
+		gameEventLoop(ref(window), ref(players));
 
 		for (auto& it : players) {
 			if (it->getHealth() <= 0) {
@@ -126,7 +130,7 @@ void gameOverLoop(sf::RenderWindow& window, int winX, int winY) {
 
 }
 
-void eventLoop(sf::RenderWindow& window, vector<Player*>& players) {
+void gameEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
