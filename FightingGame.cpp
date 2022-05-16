@@ -9,9 +9,9 @@
 
 using namespace std;
 
-bool menuLoop(sf::RenderWindow& window, int winX, int winY);
+bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner);
 
-void gameLoop(sf::RenderWindow& window, int winX, int winY);
+int gameLoop(sf::RenderWindow& window, int winX, int winY);
 
 void gameEventLoop(sf::RenderWindow& window, vector<Player*>& players);
 
@@ -27,20 +27,40 @@ int main()
 	window.setFramerateLimit(60);
 	int winX = window.getSize().x;
 	int winY = window.getSize().y;
+	int winner = -1;
 
-	if (menuLoop(ref(window), winX, winY)) {
-		gameLoop(ref(window), winX, winY);
+	bool gameOn = true;
+	while (gameOn) {
+
+		if (menuLoop(ref(window), winX, winY, winner)) {
+			winner = gameLoop(ref(window), winX, winY);
+		}
+		else {
+			gameOn = false;
+		}
 	}
-	
 }
 
-bool menuLoop(sf::RenderWindow& window, int winX, int winY) {
+bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner) {
 	bool inMenu = true;
 
 	sf::Font font;
 	font.loadFromFile("Assets/Font/cryptic.otf");
 
 	//stuff to render
+	
+	//winner text
+	sf::Text winText;
+	winText.setFont(font);
+	winText.setCharacterSize(100);
+	winText.setPosition((winX / 2) - 550, 100);
+	winText.setFillColor(sf::Color::White);
+	if (winner == 1) {
+		winText.setString("PLAYER ONE WINS!\n     PLAY AGAIN?");
+	}
+	else if (winner == 0) {
+		winText.setString("PLAYER TWO WINS!\n     PLAY AGAIN?");
+	}
 	
 	//quit box
 	sf::Vector2f quitPos((winX / 2) - 300, 800);
@@ -56,7 +76,7 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY) {
 	quitText.setFillColor(sf::Color::Black);
 
 	//play box
-	sf::Vector2f playPos((winX / 2) - 300, 200);
+	sf::Vector2f playPos((winX / 2) - 300, 390);
 	sf::RectangleShape playBox(sf::Vector2f(600, 200));
 	playBox.setPosition(playPos);
 	playBox.setFillColor(sf::Color::Cyan);
@@ -67,6 +87,12 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY) {
 	playText.setCharacterSize(180);
 	playText.setPosition(playPos.x + 10, playPos.y - 25);
 	playText.setFillColor(sf::Color::Black);
+
+	//options box
+	sf::Vector2f optPos((winX / 2) - 300, 595);
+	sf::RectangleShape optBox(sf::Vector2f(600, 200));
+	optBox.setPosition(optPos);
+	optBox.setFillColor(sf::Color::Cyan);
 
 	while (inMenu) {
 		sf::Event event;
@@ -103,8 +129,10 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY) {
 
 		//render
 		window.clear(sf::Color(0,25,25));
+		window.draw(winText);
 		window.draw(playBox);
 		window.draw(playText);
+		window.draw(optBox);
 		window.draw(quitBox);
 		window.draw(quitText);
 		window.display();
@@ -113,7 +141,7 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY) {
 
 }
 
-void gameLoop(sf::RenderWindow& window, int winX, int winY) {
+int gameLoop(sf::RenderWindow& window, int winX, int winY) {
 
 	//timer
 	Timer timer(winX);
@@ -141,7 +169,11 @@ void gameLoop(sf::RenderWindow& window, int winX, int winY) {
 
 		for (auto& it : players) {
 			if (it->getHealth() <= 0) {
-				window.close();
+				if (it->getPlayer())
+					return 0;
+				else {
+					return 1;
+				}
 			}
 			it->determine_direction();
 			it->move();

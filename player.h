@@ -24,6 +24,7 @@ public:
 	int getHealth();
 	int getWidth();
 	int getHeight();
+	bool getPlayer();
 	sf::Vector2f getPos();
 
 private:

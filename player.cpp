@@ -110,6 +110,8 @@ int Player::getWidth() { return width; }
 
 int Player::getHeight() { return height; }
 
+bool Player::getPlayer() { return playerOne; };
+
 void Player::determine_direction() {
 	if (keys[LEFT]) {
 		if (keys[UP]) {
