@@ -28,14 +28,13 @@ int main()
 	int winY = window.getSize().y;
 	int winner = -1;
 
-	bool gameOn = true;
-	while (gameOn) {
+	while (window.isOpen()) {
 
 		if (menuLoop(ref(window), winX, winY, winner)) {
 			winner = gameLoop(ref(window), winX, winY);
 		}
 		else {
-			gameOn = false;
+			window.close();
 		}
 	}
 }

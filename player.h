@@ -43,6 +43,8 @@ private:
 	bool facing = true;
 	float gravity = 1;
 	int ticker = 0;
+	int xFrame = 0;
+	int yFrame = 0;
 	float vx = 0;
 	float vy = 1;
 	int width = 237;
