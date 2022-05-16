@@ -24,6 +24,10 @@ public:
 	int getHealth();
 	int getWidth();
 	int getHeight();
+	int getTicker();
+	int getAttackDelay();
+	void addTicker(int value);
+	void setAttackDelay(int value);
 	bool getPlayer();
 	sf::Vector2f getPos();
 
@@ -46,7 +50,7 @@ private:
 	int hbWidth = 800;
 	int hbHeight = 62;
 	bool onGround = true;
-	int canAttack = 0;
+	int attackDelay = 0;
 	int maxHealth = 800;
 	int health = 800;
 	int specialCharge = 0;

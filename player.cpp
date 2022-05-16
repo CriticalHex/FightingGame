@@ -112,6 +112,14 @@ int Player::getHeight() { return height; }
 
 bool Player::getPlayer() { return playerOne; };
 
+int Player::getTicker() { return ticker; };
+
+void Player::addTicker(int value) { ticker = value; };
+
+void Player::setAttackDelay(int value) { attackDelay = value; };
+
+int Player::getAttackDelay() { return attackDelay; };
+
 void Player::determine_direction() {
 	if (keys[LEFT]) {
 		if (keys[UP]) {

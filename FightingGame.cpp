@@ -1,6 +1,5 @@
 #include <iostream>
 #include<SFML\Graphics.hpp>
-//#include<SFML\Network.hpp>
 #include<vector>
 #include<ctime>
 #include"player.h"
@@ -172,6 +171,7 @@ int gameLoop(sf::RenderWindow& window, int winX, int winY) {
 			it->determine_direction();
 			it->move();
 			it->collide(floorY, window.getSize());
+			it->addTicker(it->getTicker() + 1);
 		}
 
 		players[0]->look(players[1]->getPos().x);
@@ -243,36 +243,53 @@ void gameEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
 
 
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::G) and (players[0]->getTicker() > players[0]->getAttackDelay())) {
 			players[0]->quickAttack(ref(window), players[1]);
+			players[0]->setAttackDelay(4);
+			players[0]->addTicker(0);
+			//players[0]
 		}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) and (players[0]->getTicker() > players[0]->getAttackDelay())) {
 			players[0]->heavyAttack();
+			players[0]->setAttackDelay(4);
+			players[0]->addTicker(0);
 		}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y) and (players[0]->getTicker() > players[0]->getAttackDelay())) {
 			players[0]->block();
+			players[0]->setAttackDelay(4);
+			players[0]->addTicker(0);
 		}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H) and (players[0]->getTicker() > players[0]->getAttackDelay())) {
 			players[0]->specialAttack();
+			players[0]->setAttackDelay(4);
+			players[0]->addTicker(0);
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1) and (players[1]->getTicker() > players[1]->getAttackDelay())) {
 			players[1]->quickAttack(ref(window), players[0]);
+			players[1]->setAttackDelay(4);
+			players[1]->addTicker(0);
 		}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and (players[1]->getTicker() > players[1]->getAttackDelay())) {
 			players[1]->specialAttack();
+			players[1]->setAttackDelay(4);
+			players[1]->addTicker(0);
 		}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3) and (players[1]->getTicker() > players[1]->getAttackDelay())) {
 			players[1]->heavyAttack();
+			players[1]->setAttackDelay(4);
+			players[1]->addTicker(0);
 		}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and (players[1]->getTicker() > players[1]->getAttackDelay())) {
 			players[1]->block();
+			players[1]->setAttackDelay(4);
+			players[1]->addTicker(0);
 		}
 
 	}
