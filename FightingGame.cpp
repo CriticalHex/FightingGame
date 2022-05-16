@@ -28,39 +28,85 @@ int main()
 	int winX = window.getSize().x;
 	int winY = window.getSize().y;
 
-	menuLoop(ref(window), winX, winY);
-	gameLoop(ref(window), winX, winY);
+	if (menuLoop(ref(window), winX, winY)) {
+		gameLoop(ref(window), winX, winY);
+	}
 	
 }
 
 bool menuLoop(sf::RenderWindow& window, int winX, int winY) {
 	bool inMenu = true;
 
+	sf::Font font;
+	font.loadFromFile("Assets/Font/cryptic.otf");
+
 	//stuff to render
+	
+	//quit box
+	sf::Vector2f quitPos((winX / 2) - 300, 800);
 	sf::RectangleShape quitBox(sf::Vector2f(600, 200));
-	quitBox.setOrigin(quitBox.getSize().x / 2, 0);
-	quitBox.setPosition(winX / 2, 800);
+	quitBox.setPosition(quitPos);
 	quitBox.setFillColor(sf::Color::Cyan);
+
+	sf::Text quitText;
+	quitText.setFont(font);
+	quitText.setString("QUIT");
+	quitText.setCharacterSize(180);
+	quitText.setPosition(quitPos.x + 10, quitPos.y - 25);
+	quitText.setFillColor(sf::Color::Black);
+
+	//play box
+	sf::Vector2f playPos((winX / 2) - 300, 200);
+	sf::RectangleShape playBox(sf::Vector2f(600, 200));
+	playBox.setPosition(playPos);
+	playBox.setFillColor(sf::Color::Cyan);
+
+	sf::Text playText;
+	playText.setFont(font);
+	playText.setString("PLAY");
+	playText.setCharacterSize(180);
+	playText.setPosition(playPos.x + 10, playPos.y - 25);
+	playText.setFillColor(sf::Color::Black);
 
 	while (inMenu) {
 		sf::Event event;
+		sf::Vector2f mousePos;
+
 		while (window.pollEvent(event))
 		{
-			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
+
+			// Close window: exit
 			if (event.type == sf::Event::Closed) {
+				inMenu = false;
 				window.close();
 				return false;
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
+				inMenu = false;
 				window.close();
 				return false;
+			}
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+				mousePos = sf::Vector2f(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+				if (mousePos.x > quitBox.getPosition().x and mousePos.y > quitBox.getPosition().y and mousePos.x < quitBox.getPosition().x + quitBox.getSize().x and mousePos.y < quitBox.getPosition().y + quitBox.getSize().y) {
+					inMenu = false;
+					return false;
+				}
+				else if (mousePos.x > playBox.getPosition().x and mousePos.y > playBox.getPosition().y and mousePos.x < playBox.getPosition().x + playBox.getSize().x and mousePos.y < playBox.getPosition().y + playBox.getSize().y) {
+					inMenu = false;
+					return true;
+				}
 			}
 		}
 
 		//render
-		window.clear();
+		window.clear(sf::Color(0,25,25));
+		window.draw(playBox);
+		window.draw(playText);
 		window.draw(quitBox);
+		window.draw(quitText);
 		window.display();
 
 	}
@@ -74,7 +120,7 @@ void gameLoop(sf::RenderWindow& window, int winX, int winY) {
 
 	//bg
 	sf::Texture backgroundTexture;
-	backgroundTexture.loadFromFile("Assests/Background/background.png");
+	backgroundTexture.loadFromFile("Assets/Background/background.png");
 	sf::Sprite backgroundSprite(backgroundTexture);
 
 	//player initialization
@@ -85,7 +131,7 @@ void gameLoop(sf::RenderWindow& window, int winX, int winY) {
 	//floor variables
 	int floorY = 900;
 	sf::Texture floorTexture;
-	floorTexture.loadFromFile("Assests/Background/floor.png");
+	floorTexture.loadFromFile("Assets/Background/floor.png");
 	sf::Sprite floorSprite(floorTexture);
 	floorSprite.setPosition(0, floorY - 100);
 

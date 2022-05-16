@@ -10,15 +10,15 @@ Player::Player(sf::Vector2f pos, bool player)
 {
 	position = pos;
 	playerOne = player;
-	PlayerTexture.loadFromFile("Assests/Player/Characters/frog.png");
+	PlayerTexture.loadFromFile("Assets/Player/Characters/frog.png");
 	PlayerSprite.setTexture(PlayerTexture);
 	PlayerSprite.setTextureRect(sf::IntRect(0, 0, width, height));
 	PlayerSprite.setPosition(position);
 
-	HealthBarTexture.loadFromFile("Assests/Player/healthbar.png");
+	HealthBarTexture.loadFromFile("Assets/Player/healthbar.png");
 	HealthBarSprite.setTexture(HealthBarTexture);
 
-	HealthBarEmptyTexture.loadFromFile("Assests/Player/healthbarempty.png");
+	HealthBarEmptyTexture.loadFromFile("Assets/Player/healthbarempty.png");
 	HealthBarEmptySprite.setTexture(HealthBarEmptyTexture);
 
 	if (!playerOne) {

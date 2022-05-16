@@ -8,7 +8,7 @@ Timer::Timer(int winX)
 	time(&timer);
 	seconds = difftime(timer, start);
 
-	font.loadFromFile("Assests/Font/arial.ttf");
+	font.loadFromFile("Assets/Font/cryptic.otf");
 
 	text.setString(elapsed_time);
 	text.setFont(font);
