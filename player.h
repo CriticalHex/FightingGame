@@ -39,6 +39,8 @@ private:
 	bool facing = true;
 	float gravity = 1;
 	int ticker = 0;
+	int xFrame = 0;
+	int yFrame = 0;
 	float vx = 0;
 	float vy = 1;
 	int width = 237;
@@ -46,7 +48,7 @@ private:
 	int hbWidth = 800;
 	int hbHeight = 62;
 	bool onGround = true;
-	int canAttack = 0;
+	int attackDelay = 0;
 	int maxHealth = 800;
 	int health = 800;
 	int specialCharge = 0;
