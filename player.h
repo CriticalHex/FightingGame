@@ -39,8 +39,8 @@ private:
 	bool facing = true;
 	float gravity = 1;
 	int ticker = 0;
-	int vx = 0;
-	int vy = 1;
+	float vx = 0;
+	float vy = 1;
 	int width = 237;
 	int height = 297;
 	int hbWidth = 800;

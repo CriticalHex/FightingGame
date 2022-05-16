@@ -42,8 +42,6 @@ int main()
 }
 
 bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner) {
-	bool inMenu = true;
-
 	sf::Font font;
 	font.loadFromFile("Assets/Font/cryptic.otf");
 
@@ -94,7 +92,7 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner) {
 	optBox.setPosition(optPos);
 	optBox.setFillColor(sf::Color::Cyan);
 
-	while (inMenu) {
+	while (true) {
 		sf::Event event;
 		sf::Vector2f mousePos;
 
@@ -103,13 +101,11 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner) {
 
 			// Close window: exit
 			if (event.type == sf::Event::Closed) {
-				inMenu = false;
 				window.close();
 				return false;
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
-				inMenu = false;
 				window.close();
 				return false;
 			}
@@ -117,11 +113,9 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner) {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				mousePos = sf::Vector2f(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 				if (mousePos.x > quitBox.getPosition().x and mousePos.y > quitBox.getPosition().y and mousePos.x < quitBox.getPosition().x + quitBox.getSize().x and mousePos.y < quitBox.getPosition().y + quitBox.getSize().y) {
-					inMenu = false;
 					return false;
 				}
 				else if (mousePos.x > playBox.getPosition().x and mousePos.y > playBox.getPosition().y and mousePos.x < playBox.getPosition().x + playBox.getSize().x and mousePos.y < playBox.getPosition().y + playBox.getSize().y) {
-					inMenu = false;
 					return true;
 				}
 			}

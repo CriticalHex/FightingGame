@@ -1,4 +1,5 @@
 #pragma once
+
 #include<ctime>;
 #include<SFML/Graphics.hpp>
 
