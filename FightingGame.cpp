@@ -9,9 +9,7 @@
 
 using namespace std;
 
-void menuLoop(sf::RenderWindow& window, int winX, int winY);
-
-void menuEventLoop(sf::RenderWindow& window, vector<Player*>& players);
+bool menuLoop(sf::RenderWindow& window, int winX, int winY);
 
 void gameLoop(sf::RenderWindow& window, int winX, int winY);
 
@@ -30,27 +28,42 @@ int main()
 	int winX = window.getSize().x;
 	int winY = window.getSize().y;
 
+	menuLoop(ref(window), winX, winY);
 	gameLoop(ref(window), winX, winY);
 	
 }
 
-void menuLoop(sf::RenderWindow& window, int winX, int winY) {
+bool menuLoop(sf::RenderWindow& window, int winX, int winY) {
+	bool inMenu = true;
 
-}
+	//stuff to render
+	sf::RectangleShape quitBox(sf::Vector2f(600, 200));
+	quitBox.setOrigin(quitBox.getSize().x / 2, 0);
+	quitBox.setPosition(winX / 2, 800);
+	quitBox.setFillColor(sf::Color::Cyan);
 
-void menuEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
-	sf::Event event;
-	while (window.pollEvent(event))
-	{
-		// Close window: exit--------------------------------------------------------------------------------------------------------------------------
-		if (event.type == sf::Event::Closed)
-			window.close();
+	while (inMenu) {
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			// Close window: exit--------------------------------------------------------------------------------------------------------------------------
+			if (event.type == sf::Event::Closed) {
+				window.close();
+				return false;
+			}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
-			window.close();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) { //press lcontrol: exit
+				window.close();
+				return false;
+			}
 		}
-	}
 
+		//render
+		window.clear();
+		window.draw(quitBox);
+		window.display();
+
+	}
 
 }
 
@@ -102,10 +115,6 @@ void gameLoop(sf::RenderWindow& window, int winX, int winY) {
 		}
 		window.display();
 	}
-}
-
-void gameOverLoop(sf::RenderWindow& window, int winX, int winY) {
-
 }
 
 void gameEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
@@ -195,4 +204,12 @@ void gameEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
 		}
 
 	}
+}
+
+void gameOverLoop(sf::RenderWindow& window, int winX, int winY) {
+
+}
+
+void gameOverEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
+
 }
