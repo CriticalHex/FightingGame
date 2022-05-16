@@ -41,8 +41,8 @@ private:
 	int ticker = 0;
 	int vx = 0;
 	int vy = 1;
-	int width = 162;
-	int height = 280;
+	int width = 237;
+	int height = 297;
 	int hbWidth = 800;
 	int hbHeight = 62;
 	bool onGround = true;
@@ -54,5 +54,4 @@ private:
 	int reach = 120;
 	bool attacking = false;
 	sf::RectangleShape AttackRect;
-	sf::RectangleShape rect;//temp
 };
