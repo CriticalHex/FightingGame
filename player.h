@@ -24,9 +24,7 @@ public:
 	int getHealth();
 	int getWidth();
 	int getHeight();
-	int getTicker();
 	int getAttackDelay();
-	void addTicker(int value);
 	void setAttackDelay(int value);
 	bool getPlayer();
 	sf::Vector2f getPos();

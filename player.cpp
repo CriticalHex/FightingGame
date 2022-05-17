@@ -12,7 +12,6 @@ Player::Player(sf::Vector2f pos, bool player)
 	playerOne = player;
 	PlayerTexture.loadFromFile("Assets/Player/Characters/frog.png");
 	PlayerSprite.setTexture(PlayerTexture);
-	PlayerSprite.setTextureRect(sf::IntRect(0, 0, width, height));
 	PlayerSprite.setPosition(position);
 
 	HealthBarTexture.loadFromFile("Assets/Player/healthbar.png");
@@ -59,14 +58,18 @@ void Player::collide(int floorLevel, sf::Vector2u windowSize) {
 
 void Player::draw(sf::RenderWindow& window) {
 	if (facing) {
-		//PlayerSprite.setTextureRect(sf::IntRect(0, 0, width, height));
 		PlayerSprite.setTextureRect(sf::IntRect( 0 + (width * xFrame), 0, width + (width * xFrame), height + (height * yFrame)));
 	}
 	if (!facing) {
-		//PlayerSprite.setTextureRect(sf::IntRect(width, 0, -width, height));
 		PlayerSprite.setTextureRect(sf::IntRect(width + (width * xFrame), 0, -(width + (width * xFrame)), height + (height * yFrame)));
 	}
-	
+	if (attackDelay > 0) {
+		xFrame += 1;
+		attackDelay--;
+	}
+	else {
+		xFrame = 0;
+	}
 	window.draw(HealthBarSprite);
 	window.draw(HealthBarEmptySprite);
 	window.draw(PlayerSprite);
@@ -114,10 +117,6 @@ int Player::getWidth() { return width; }
 int Player::getHeight() { return height; }
 
 bool Player::getPlayer() { return playerOne; };
-
-int Player::getTicker() { return ticker; };
-
-void Player::addTicker(int value) { ticker = value; };
 
 void Player::setAttackDelay(int value) { attackDelay = value; };
 
