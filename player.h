@@ -11,7 +11,7 @@ public:
 	void collide(int floorLevel, sf::Vector2u windowSize);
 	void draw(sf::RenderWindow& window);
 	void look(float otherX);
-	void move();
+	void move(int floorLevel);
 	void determine_direction();
 	void specialAttack();
 	void quickAttack(sf::RenderWindow& window, Player* player);
@@ -29,6 +29,7 @@ public:
 	bool getPlayer();
 	sf::Vector2f getPos();
 	void setVel(float x, float y);
+	void checkOnGround();
 
 private:
 	sf::Vector2f position;

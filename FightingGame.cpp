@@ -168,7 +168,7 @@ int gameLoop(sf::RenderWindow& window, int winX, int winY) {
 				}
 			}
 			it->determine_direction();
-			it->move();
+			it->move(floorY);
 			it->collide(floorY, window.getSize());
 		}
 

@@ -87,14 +87,25 @@ void Player::look(float otherX) {
 	}
 }
 
-void Player::move() {
+void Player::move(int floorLevel) {
+	if (position.y + height < floorLevel) { //floor collide
+		onGround = false;
+	}
+
 	if (keys[LEFT] == true) {
 		vx = -10;
 	}
 	else if (keys[RIGHT] == true) {
 		vx = 10;
 	}
-	else vx = 0;
+	else {
+		if (onGround == false) {
+			vx *= 0.9;
+		}
+		else { 
+			vx = 0;
+		}
+	}
 	if (keys[UP] == true and onGround == true) {
 		vy = -20;
 		onGround = false;
@@ -104,11 +115,9 @@ void Player::move() {
 	}
 
 	vy += gravity;
-
+	
 	position.x += vx;
 	position.y += vy;
-
-	
 }
 
 sf::Vector2f Player::getPos() { return position; }
@@ -198,7 +207,8 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setFillColor(sf::Color::Transparent);
 			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
 				player->damage(5);
-				player->setVel(3, 6);
+				player->setVel(6, -10);
+
 			}
 		}
 		else if (facing == true and direction == DOWN) {
@@ -215,7 +225,7 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setFillColor(sf::Color::Transparent);
 			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
 				player->damage(5);
-				player->setVel(3, 0);
+				player->setVel(10, -6);
 			}
 		}
 		else {
@@ -232,7 +242,8 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setFillColor(sf::Color::Transparent);
 			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
 				player->damage(5);
-				player->setVel(3, 0);
+				player->setVel(10, -6);
+				
 			}
 		}
 	}
@@ -252,7 +263,7 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setFillColor(sf::Color::Transparent);
 			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
 				player->damage(5);
-				player->setVel(50, 5);
+				player->setVel(-6, -10);
 			}
 		}
 		else if (facing == false and direction == DOWN) {
@@ -269,7 +280,7 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setFillColor(sf::Color::Transparent);
 			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
 				player->damage(5);
-				player->setVel(50, 5);
+				player->setVel(-10, -6);
 			}
 		}
 		else {
@@ -286,7 +297,7 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setFillColor(sf::Color::Transparent);
 			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
 				player->damage(5);
-				player->setVel(50, 5);
+				player->setVel(-10, -6);
 			}
 		}
 	}
