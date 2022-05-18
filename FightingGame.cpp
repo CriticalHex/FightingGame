@@ -243,42 +243,34 @@ void gameEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::G) and (players[0]->getAttackDelay() == 0)) {
 			players[0]->quickAttack(ref(window), players[1]);
-			players[0]->setAttackDelay(6);
 		}
 
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) and (players[0]->getAttackDelay() == 0)) {
 			players[0]->heavyAttack();
-			players[0]->setAttackDelay(6);
 		}
 
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y) and (players[0]->getAttackDelay() == 0)) {
 			players[0]->block();
-			players[0]->setAttackDelay(6);
 		}
 
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H) and (players[0]->getAttackDelay() == 0)) {
 			players[0]->specialAttack();
-			players[0]->setAttackDelay(6);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1) and (players[1]->getAttackDelay() == 0)) {
 			players[1]->quickAttack(ref(window), players[0]);
-			players[1]->setAttackDelay(6);
 		}
 
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and (players[1]->getAttackDelay() == 0)) {
 			players[1]->specialAttack();
-			players[1]->setAttackDelay(6);
 		}
 
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3) and (players[1]->getAttackDelay() == 0)) {
 			players[1]->heavyAttack();
-			players[1]->setAttackDelay(6);
 		}
 
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and (players[1]->getAttackDelay() == 0)) {
 			players[1]->block();
-			players[1]->setAttackDelay(6);
 		}
 
 	}

@@ -184,6 +184,7 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 	sf::Vector2f fist;
 	if (facing) {
 		if (facing == true and direction == UP) {
+			attackDelay = 6;
 			shoulder.x = (position.x + width);
 			shoulder.y = (position.y + 50);
 			fist.x = (position.x + width + 25);
@@ -194,8 +195,13 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
+			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+				player->damage(5);
+				player->setVel(3, 6);
+			}
 		}
 		else if (facing == true and direction == DOWN) {
+			attackDelay = 6;
 			shoulder.x = (position.x + width);
 			shoulder.y = (position.y + height - 25);
 			fist.x = (position.x + width + reach);
@@ -206,8 +212,13 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
+			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+				player->damage(5);
+				player->setVel(3, 0);
+			}
 		}
 		else {
+			attackDelay = 6;
 			shoulder.x = (position.x + width);
 			shoulder.y = (position.y + 50);
 			fist.x = (position.x + width + reach);
@@ -218,11 +229,16 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
+			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+				player->damage(5);
+				player->setVel(3, 0);
+			}
 		}
 	}
 
 	if (!facing) {
 		if (facing == false and direction == UP) {
+			attackDelay = 6;
 			shoulder.x = (position.x);
 			shoulder.y = (position.y + 50);
 			fist.x = (position.x - 25);
@@ -233,8 +249,13 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
+			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+				player->damage(5);
+				player->setVel(50, 5);
+			}
 		}
 		else if (facing == false and direction == DOWN) {
+			attackDelay = 6;
 			shoulder.x = (position.x);
 			shoulder.y = (position.y + height - 25);
 			fist.x = (position.x - reach);
@@ -245,8 +266,13 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
+			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+				player->damage(5);
+				player->setVel(50, 5);
+			}
 		}
 		else {
+			attackDelay = 6;
 			shoulder.x = (position.x);
 			shoulder.y = (position.y + 50);
 			fist.x = (position.x - reach);
@@ -257,11 +283,11 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
+			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+				player->damage(5);
+				player->setVel(50, 5);
+			}
 		}
-	}
-	
-	if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
-		player->damage(5);
 	}
 }
 
@@ -281,4 +307,9 @@ bool Player::collision(sf::Vector2f shoulder, sf::Vector2f fist, sf::Vector2f ot
 		return true;
 	}
 	return false;
+}
+
+void Player::setVel(float x, float y){
+	vx += x;
+	vy += y;
 }

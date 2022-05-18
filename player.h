@@ -28,6 +28,7 @@ public:
 	void setAttackDelay(int value);
 	bool getPlayer();
 	sf::Vector2f getPos();
+	void setVel(float x, float y);
 
 private:
 	sf::Vector2f position;
