@@ -57,12 +57,6 @@ void Player::collide(int floorLevel, sf::Vector2u windowSize) {
 }
 
 void Player::draw(sf::RenderWindow& window) {
-	if (facing) {
-		PlayerSprite.setTextureRect(sf::IntRect( 0 + (width * xFrame), 0, width + (width * xFrame), height + (height * yFrame)));
-	}
-	if (!facing) {
-		PlayerSprite.setTextureRect(sf::IntRect(width + (width * xFrame), 0, -(width + (width * xFrame)), height + (height * yFrame)));
-	}
 	if (attackDelay > 0) {
 		xFrame += 1;
 		attackDelay--;
@@ -70,6 +64,13 @@ void Player::draw(sf::RenderWindow& window) {
 	else {
 		xFrame = 0;
 	}
+	if (facing) {
+		PlayerSprite.setTextureRect(sf::IntRect( 0 + (width * xFrame), 0, width, height ));
+	}
+	if (!facing) {
+		PlayerSprite.setTextureRect(sf::IntRect(width + (width * xFrame), 0, -width, height ));
+	}
+	
 	window.draw(HealthBarSprite);
 	window.draw(HealthBarEmptySprite);
 	window.draw(PlayerSprite);
