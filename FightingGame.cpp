@@ -1,4 +1,4 @@
-#include <iostream>
+#include<iostream>
 #include<SFML\Graphics.hpp>
 #include<vector>
 #include<ctime>
@@ -44,7 +44,7 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner) {
 	font.loadFromFile("Assets/Font/cryptic.otf");
 
 	//stuff to render
-	
+
 	//winner text
 	sf::Text winText;
 	winText.setFont(font);
@@ -57,7 +57,7 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner) {
 	else if (winner == 0) {
 		winText.setString("PLAYER TWO WINS!\n     PLAY AGAIN?");
 	}
-	
+
 	//quit box
 	sf::Vector2f quitPos((winX / 2) - 300, 800);
 	sf::RectangleShape quitBox(sf::Vector2f(600, 200));
@@ -120,7 +120,7 @@ bool menuLoop(sf::RenderWindow& window, int winX, int winY, int winner) {
 		}
 
 		//render
-		window.clear(sf::Color(0,25,25));
+		window.clear(sf::Color(0, 25, 25));
 		window.draw(winText);
 		window.draw(playBox);
 		window.draw(playText);
@@ -175,6 +175,13 @@ int gameLoop(sf::RenderWindow& window, int winX, int winY) {
 		players[0]->look(players[1]->getPos().x);
 		players[1]->look(players[0]->getPos().x);
 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+			if (players[0]->getDevMode() == true) { players[0]->setDevMode(false); }
+			else { players[0]->setDevMode(true); }
+			if (players[1]->getDevMode() == true) { players[1]->setDevMode(false); }
+			else { players[1]->setDevMode(true); }
+		}
+
 		//render
 		window.clear();
 		window.draw(backgroundSprite);
@@ -199,80 +206,81 @@ void gameEventLoop(sf::RenderWindow& window, vector<Player*>& players) {
 			window.close();
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			players[0]->keys[LEFT] = true;
-		}
-		else players[0]->keys[LEFT] = false;
+		if (players[0]->getStun() == 0) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				players[0]->keys[LEFT] = true;
+			}
+			else players[0]->keys[LEFT] = false;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			players[0]->keys[RIGHT] = true;
-		}
-		else players[0]->keys[RIGHT] = false;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+				players[0]->keys[RIGHT] = true;
+			}
+			else players[0]->keys[RIGHT] = false;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			players[0]->keys[UP] = true;
-		}
-		else players[0]->keys[UP] = false;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+				players[0]->keys[UP] = true;
+			}
+			else players[0]->keys[UP] = false;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			players[0]->keys[DOWN] = true;
-		}
-		else players[0]->keys[DOWN] = false;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				players[0]->keys[DOWN] = true;
+			}
+			else players[0]->keys[DOWN] = false;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			players[1]->keys[LEFT] = true;
-		}
-		else players[1]->keys[LEFT] = false;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G) and (players[0]->getAttackDelay() == 0)) {
+				players[0]->quickAttack(ref(window), players[1]);
+			}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			players[1]->keys[RIGHT] = true;
-		}
-		else players[1]->keys[RIGHT] = false;
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) and (players[0]->getAttackDelay() == 0)) {
+				players[0]->heavyAttack();
+			}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			players[1]->keys[UP] = true;
-		}
-		else players[1]->keys[UP] = false;
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y) and (players[0]->getAttackDelay() == 0)) {
+				players[0]->block();
+			}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			players[1]->keys[DOWN] = true;
-		}
-		else players[1]->keys[DOWN] = false;
-
-
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::G) and (players[0]->getAttackDelay() == 0)) {
-			players[0]->quickAttack(ref(window), players[1]);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H) and (players[0]->getAttackDelay() == 0)) {
+				players[0]->specialAttack();
+			}
 		}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) and (players[0]->getAttackDelay() == 0)) {
-			players[0]->heavyAttack();
-		}
+		if (players[1]->getStun() == 0) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+				players[1]->keys[LEFT] = true;
+			}
+			else players[1]->keys[LEFT] = false;
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y) and (players[0]->getAttackDelay() == 0)) {
-			players[0]->block();
-		}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+				players[1]->keys[RIGHT] = true;
+			}
+			else players[1]->keys[RIGHT] = false;
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H) and (players[0]->getAttackDelay() == 0)) {
-			players[0]->specialAttack();
-		}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				players[1]->keys[UP] = true;
+			}
+			else players[1]->keys[UP] = false;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1) and (players[1]->getAttackDelay() == 0)) {
-			players[1]->quickAttack(ref(window), players[0]);
-		}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				players[1]->keys[DOWN] = true;
+			}
+			else players[1]->keys[DOWN] = false;
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and (players[1]->getAttackDelay() == 0)) {
-			players[1]->specialAttack();
-		}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1) and (players[1]->getAttackDelay() == 0)) {
+				players[1]->quickAttack(ref(window), players[0]);
+			}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3) and (players[1]->getAttackDelay() == 0)) {
-			players[1]->heavyAttack();
-		}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and (players[1]->getAttackDelay() == 0)) {
+				players[1]->specialAttack();
+			}
 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and (players[1]->getAttackDelay() == 0)) {
-			players[1]->block();
-		}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3) and (players[1]->getAttackDelay() == 0)) {
+				players[1]->heavyAttack();
+			}
 
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and (players[1]->getAttackDelay() == 0)) {
+				players[1]->block();
+			}
+		}
 	}
 }
 

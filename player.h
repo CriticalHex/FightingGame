@@ -5,7 +5,7 @@
 class Player
 {
 public:
-	
+
 	Player(sf::Vector2f pos, bool face);
 	~Player();
 	void collide(int floorLevel, sf::Vector2u windowSize);
@@ -24,15 +24,24 @@ public:
 	int getHealth();
 	int getWidth();
 	int getHeight();
+	int getStun();
 	int getAttackDelay();
 	void setAttackDelay(int value);
 	bool getPlayer();
+	bool getDevMode();
+	sf::Vector2f getPlayerPos();
 	sf::Vector2f getPos();
 	void setVel(float x, float y);
 	void checkOnGround();
+	void setOnGround(bool x);
+	void setStun(int stunAmmount);
+	void hitbox(int xPos, int yPos, int width, int height);
+	void setDevMode(bool x);
 
 private:
 	sf::Vector2f position;
+	sf::Vector2f playerXY;
+	sf::Vector2f playerWH;
 	sf::Texture PlayerTexture;
 	sf::Sprite PlayerSprite;
 	sf::Texture HealthBarTexture;
@@ -47,6 +56,8 @@ private:
 	int yFrame = 0;
 	float vx = 0;
 	float vy = 1;
+	int psWidthOffset = 75;
+	int psHeightOffset = 0;
 	int width = 237;
 	int height = 297;
 	int hbWidth = 800;
@@ -59,5 +70,9 @@ private:
 	int direction = NONE;
 	int reach = 120;
 	bool attacking = false;
+	int shoulderPos = 75;
+	int stun = 0;
+	bool devMode = false;
 	sf::RectangleShape AttackRect;
+	sf::RectangleShape pHitbox;
 };

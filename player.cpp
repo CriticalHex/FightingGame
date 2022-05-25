@@ -57,6 +57,7 @@ void Player::collide(int floorLevel, sf::Vector2u windowSize) {
 }
 
 void Player::draw(sf::RenderWindow& window) {
+	hitbox(position.x, position.y, width - psWidthOffset, height - psHeightOffset);
 	if (attackDelay > 0) {
 		xFrame += 1;
 		attackDelay--;
@@ -64,17 +65,24 @@ void Player::draw(sf::RenderWindow& window) {
 	else {
 		xFrame = 0;
 	}
+	if (stun > 0) {
+		stun--;
+	}
 	if (facing) {
-		PlayerSprite.setTextureRect(sf::IntRect( 0 + (width * xFrame), 0, width, height ));
+		PlayerSprite.setTextureRect(sf::IntRect(0 + (width * xFrame), 0, width, height));
 	}
 	if (!facing) {
-		PlayerSprite.setTextureRect(sf::IntRect(width + (width * xFrame), 0, -width, height ));
+		PlayerSprite.setTextureRect(sf::IntRect(width + (width * xFrame), 0, -width, height));
 	}
-	
+
 	window.draw(HealthBarSprite);
 	window.draw(HealthBarEmptySprite);
 	window.draw(PlayerSprite);
-	window.draw(AttackRect);
+	if (devMode == true) {
+		window.draw(AttackRect);
+		window.draw(pHitbox);
+	}
+
 	AttackRect.setOutlineColor(sf::Color::Transparent);
 }
 
@@ -102,7 +110,7 @@ void Player::move(int floorLevel) {
 		if (onGround == false) {
 			vx *= 0.9;
 		}
-		else { 
+		else {
 			vx = 0;
 		}
 	}
@@ -115,22 +123,34 @@ void Player::move(int floorLevel) {
 	}
 
 	vy += gravity;
-	
-	position.x += vx;
+
 	position.y += vy;
+	position.x += vx;
 }
 
 sf::Vector2f Player::getPos() { return position; }
 
-int Player::getWidth() { return width; }
+sf::Vector2f Player::getPlayerPos() { return playerXY; }
 
-int Player::getHeight() { return height; }
+int Player::getWidth() { return playerWH.x; }
+
+int Player::getHeight() { return playerWH.y; }
 
 bool Player::getPlayer() { return playerOne; };
 
 void Player::setAttackDelay(int value) { attackDelay = value; };
 
 int Player::getAttackDelay() { return attackDelay; };
+
+void Player::setOnGround(bool x) { onGround = x; };
+
+void Player::setStun(int stunAmmount) { stun = stunAmmount; };
+
+int Player::getStun() { return stun; };
+
+void Player::setDevMode(bool x) { devMode = x; };
+
+bool Player::getDevMode() { return devMode; };
 
 void Player::determine_direction() {
 	if (keys[LEFT]) {
@@ -195,55 +215,60 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 	if (facing) {
 		if (facing == true and direction == UP) {
 			attackDelay = 6;
-			shoulder.x = (position.x + width);
-			shoulder.y = (position.y + 50);
-			fist.x = (position.x + width + 25);
-			fist.y = (position.y + 50 - reach);
+			player->setStun(3);
+			shoulder.x = (playerXY.x + playerWH.x);
+			shoulder.y = (playerXY.y + shoulderPos);
+			fist.x = (playerXY.x + playerWH.x + 25);
+			fist.y = (playerXY.y + shoulderPos - reach);
 
 			AttackRect.setSize(sf::Vector2f(25, -reach));
 			AttackRect.setPosition(shoulder);
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
-			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+			if (collision(shoulder, fist, player->getPlayerPos(), sf::Vector2f((player->getPlayerPos().x + player->getWidth()), player->getPlayerPos().y + player->getHeight()))) {
 				player->damage(5);
 				player->setVel(6, -10);
+				player->setOnGround(false);
 
 			}
 		}
 		else if (facing == true and direction == DOWN) {
 			attackDelay = 6;
-			shoulder.x = (position.x + width);
-			shoulder.y = (position.y + height - 25);
-			fist.x = (position.x + width + reach);
-			fist.y = (position.y + height - 25);
+			player->setStun(3);
+			shoulder.x = (playerXY.x + playerWH.x);
+			shoulder.y = (playerXY.y + playerWH.y - 25);
+			fist.x = (playerXY.x + playerWH.x + reach);
+			fist.y = (playerXY.y + playerWH.y - 25);
 
 			AttackRect.setSize(sf::Vector2f(reach, -25));
 			AttackRect.setPosition(shoulder);
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
-			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+			if (collision(shoulder, fist, player->getPlayerPos(), sf::Vector2f((player->getPlayerPos().x + player->getWidth()), player->getPlayerPos().y + player->getHeight()))) {
 				player->damage(5);
 				player->setVel(10, -6);
+				player->setOnGround(false);
 			}
 		}
 		else {
 			attackDelay = 6;
-			shoulder.x = (position.x + width);
-			shoulder.y = (position.y + 50);
-			fist.x = (position.x + width + reach);
-			fist.y = (position.y + 50 + 25);
+			player->setStun(3);
+			shoulder.x = (playerXY.x + playerWH.x);
+			shoulder.y = (playerXY.y + shoulderPos);
+			fist.x = (playerXY.x + playerWH.x + reach);
+			fist.y = (playerXY.y + shoulderPos + 25);
 
 			AttackRect.setSize(sf::Vector2f(reach, 25));
 			AttackRect.setPosition(shoulder);
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
-			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+			if (collision(shoulder, fist, player->getPlayerPos(), sf::Vector2f((player->getPlayerPos().x + player->getWidth()), player->getPlayerPos().y + player->getHeight()))) {
 				player->damage(5);
 				player->setVel(10, -6);
-				
+				player->setOnGround(false);
 			}
 		}
 	}
@@ -251,53 +276,59 @@ void Player::quickAttack(sf::RenderWindow& window, Player* player) {
 	if (!facing) {
 		if (facing == false and direction == UP) {
 			attackDelay = 6;
-			shoulder.x = (position.x);
-			shoulder.y = (position.y + 50);
-			fist.x = (position.x - 25);
-			fist.y = (position.y + 50 - reach);
+			player->setStun(3);
+			shoulder.x = (playerXY.x);
+			shoulder.y = (playerXY.y + shoulderPos);
+			fist.x = (playerXY.x - 25);
+			fist.y = (playerXY.y + shoulderPos - reach);
 
 			AttackRect.setSize(sf::Vector2f(-25, -reach));
 			AttackRect.setPosition(shoulder);
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
-			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+			if (collision(shoulder, fist, player->getPlayerPos(), sf::Vector2f((player->getPlayerPos().x + player->getWidth()), player->getPlayerPos().y + player->getHeight()))) {
 				player->damage(5);
 				player->setVel(-6, -10);
+				player->setOnGround(false);
 			}
 		}
 		else if (facing == false and direction == DOWN) {
 			attackDelay = 6;
-			shoulder.x = (position.x);
-			shoulder.y = (position.y + height - 25);
-			fist.x = (position.x - reach);
-			fist.y = (position.y + height - 25);
+			player->setStun(3);
+			shoulder.x = (playerXY.x);
+			shoulder.y = (playerXY.y + playerWH.y - 25);
+			fist.x = (playerXY.x - reach);
+			fist.y = (playerXY.y + playerWH.y - 25);
 
 			AttackRect.setSize(sf::Vector2f(-reach, -25));
 			AttackRect.setPosition(shoulder);
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
-			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+			if (collision(shoulder, fist, player->getPlayerPos(), sf::Vector2f((player->getPlayerPos().x + player->getWidth()), player->getPlayerPos().y + player->getHeight()))) {
 				player->damage(5);
 				player->setVel(-10, -6);
+				player->setOnGround(false);
 			}
 		}
 		else {
+			player->setStun(3);
 			attackDelay = 6;
-			shoulder.x = (position.x);
-			shoulder.y = (position.y + 50);
-			fist.x = (position.x - reach);
-			fist.y = (position.y + 50 + 25);
+			shoulder.x = (playerXY.x);
+			shoulder.y = (playerXY.y + shoulderPos);
+			fist.x = (playerXY.x - reach);
+			fist.y = (playerXY.y + shoulderPos + 25);
 
 			AttackRect.setSize(sf::Vector2f(reach, -25));
 			AttackRect.setPosition(fist);
 			AttackRect.setOutlineColor(sf::Color::Red);
 			AttackRect.setOutlineThickness(5);
 			AttackRect.setFillColor(sf::Color::Transparent);
-			if (collision(shoulder, fist, player->getPos(), sf::Vector2f((player->getPos().x + player->getWidth()), player->getPos().y + player->getHeight()))) {
+			if (collision(shoulder, fist, player->getPlayerPos(), sf::Vector2f((player->getPlayerPos().x + player->getWidth()), player->getPlayerPos().y + player->getHeight()))) {
 				player->damage(5);
 				player->setVel(-10, -6);
+				player->setOnGround(false);
 			}
 		}
 	}
@@ -313,15 +344,41 @@ void Player::block() {
 
 bool Player::collision(sf::Vector2f shoulder, sf::Vector2f fist, sf::Vector2f otherPosTopLeft, sf::Vector2f otherPosBottemRight) {
 	if ((((shoulder.x >= otherPosTopLeft.x) and (shoulder.x <= otherPosBottemRight.x)) and
-	((shoulder.y >= otherPosTopLeft.y) and (shoulder.y <= otherPosBottemRight.y))) or
-	(((fist.x >= otherPosTopLeft.x) and (fist.x <= otherPosBottemRight.x)) and
-	((fist.y >= otherPosTopLeft.y) and (fist.y <= otherPosBottemRight.y)))) {
+		((shoulder.y >= otherPosTopLeft.y) and (shoulder.y <= otherPosBottemRight.y))) or
+		(((fist.x >= otherPosTopLeft.x) and (fist.x <= otherPosBottemRight.x)) and
+			((fist.y >= otherPosTopLeft.y) and (fist.y <= otherPosBottemRight.y)))) {
 		return true;
 	}
 	return false;
 }
 
-void Player::setVel(float x, float y){
-	vx += x;
+void Player::setVel(float x, float y) {
 	vy += y;
+	vx += x;
+}
+
+void Player::hitbox(int xPos, int yPos, int w, int h) {
+	if (facing) {
+		pHitbox.setSize(sf::Vector2f(w, h));
+		pHitbox.setPosition(xPos, yPos);
+		pHitbox.setOutlineColor(sf::Color::Red);
+		pHitbox.setOutlineThickness(5);
+		pHitbox.setFillColor(sf::Color::Transparent);
+		playerXY.x = xPos;
+		playerXY.y = yPos;
+		playerWH.x = w;
+		playerWH.y = h;
+	}
+	else if (!facing) {
+		pHitbox.setSize(sf::Vector2f(w, h));
+		pHitbox.setPosition(xPos + psWidthOffset, yPos);
+		pHitbox.setOutlineColor(sf::Color::Red);
+		pHitbox.setOutlineThickness(5);
+		pHitbox.setFillColor(sf::Color::Transparent);
+		playerXY.x = xPos + psWidthOffset;
+		playerXY.y = yPos;
+		playerWH.x = w;
+		playerWH.y = h;
+	}
+
 }
