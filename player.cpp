@@ -60,6 +60,7 @@ void Player::draw(sf::RenderWindow& window) {
 	hitbox(position.x, position.y, width - psWidthOffset, height - psHeightOffset);
 	if (attackDelay > 0) {
 		xFrame += 1;
+		if (xFrame > 5) { xFrame = 0; }
 		attackDelay--;
 	}
 	else {
@@ -71,7 +72,7 @@ void Player::draw(sf::RenderWindow& window) {
 	if (facing) {
 		PlayerSprite.setTextureRect(sf::IntRect(0 + (width * xFrame), 0, width, height));
 	}
-	if (!facing) {
+	else {
 		PlayerSprite.setTextureRect(sf::IntRect(width + (width * xFrame), 0, -width, height));
 	}
 
